@@ -272,7 +272,7 @@ export default
   loading: loading.models.rule,
 }))
 @Form.create()
-class TableList extends PureComponent {
+class NewPage1 extends PureComponent {
   state = {
     modalVisible: false,
     updateModalVisible: false,
@@ -286,6 +286,7 @@ class TableList extends PureComponent {
     {
       title: '规则名称',
       dataIndex: 'name',
+      render: text => <a href="javascript:;">{text}</a>,
     },
     {
       title: '描述',
@@ -401,18 +402,8 @@ class TableList extends PureComponent {
 
     if (!selectedRows) return;
     switch (e.key) {
-      case 'remove':
-        dispatch({
-          type: 'rule/remove',
-          payload: {
-            key: selectedRows.map(row => row.key),
-          },
-          callback: () => {
-            this.setState({
-              selectedRows: [],
-            });
-          },
-        });
+      case 'create':
+        this.handleUpdateModalVisible(true)
         break;
       default:
         break;
@@ -617,7 +608,7 @@ class TableList extends PureComponent {
     const { selectedRows, modalVisible, updateModalVisible, stepFormValues } = this.state;
     const menu = (
       <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
-        <Menu.Item key="remove">删除</Menu.Item>
+        <Menu.Item key="create">创建视图</Menu.Item>
         <Menu.Item key="approval">批量审批</Menu.Item>
       </Menu>
     );
@@ -636,7 +627,12 @@ class TableList extends PureComponent {
           <div className={styles.tableList}>
             <div className={styles.tableListForm}>{this.renderForm()}</div>
             <div className={styles.tableListOperator}>
-              <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
+              <Dropdown overlay={menu}>
+                <Button>
+                  视图 <Icon type="down" />
+                </Button>
+              </Dropdown>
+              {/* <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
                 新建
               </Button>
               {selectedRows.length > 0 && (
@@ -648,16 +644,26 @@ class TableList extends PureComponent {
                     </Button>
                   </Dropdown>
                 </span>
-              )}
+              )} */}
             </div>
-            <StandardTable
-              selectedRows={selectedRows}
-              loading={loading}
-              data={data}
-              columns={this.columns}
-              onSelectRow={this.handleSelectRows}
-              onChange={this.handleStandardTableChange}
-            />
+            <div className={styles.tableListBody}>
+              <StandardTable
+                selectedRows={selectedRows}
+                loading={loading}
+                data={data}
+                columns={this.columns}
+                onSelectRow={this.handleSelectRows}
+                onChange={this.handleStandardTableChange}
+              />
+              <StandardTable
+                selectedRows={selectedRows}
+                loading={loading}
+                data={data}
+                columns={this.columns}
+                onSelectRow={this.handleSelectRows}
+                onChange={this.handleStandardTableChange}
+              />
+            </div>
           </div>
         </Card>
         <CreateForm {...parentMethods} modalVisible={modalVisible} />

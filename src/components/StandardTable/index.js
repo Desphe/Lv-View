@@ -24,20 +24,32 @@ class StandardTable extends PureComponent {
     };
   }
 
-  static getDerivedStateFromProps(nextProps) {
-    // clean state
-    if (nextProps.selectedRows.length === 0) {
-      const needTotalList = initTotalList(nextProps.columns);
-      return {
-        selectedRowKeys: [],
-        needTotalList,
-      };
+  // static getDerivedStateFromProps(nextProps) {
+  //   // clean state
+  //   if (nextProps.selectedRows.length === 0) {
+  //     const needTotalList = initTotalList(nextProps.columns);
+  //     return {
+  //       selectedRowKeys: [],
+  //       needTotalList,
+  //     };
+  //   }
+  //   return null;
+  // }
+
+  selectRow = (record) => {
+    if(record.disabled) return;
+    const selectedRowKeys = [...this.state.selectedRowKeys];
+    if (selectedRowKeys.indexOf(record.key) >= 0) {
+      selectedRowKeys.splice(selectedRowKeys.indexOf(record.key), 1);
+    } else {
+      selectedRowKeys.push(record.key);
     }
-    return null;
+    this.setState({ selectedRowKeys });
   }
 
   handleRowSelectChange = (selectedRowKeys, selectedRows) => {
     let { needTotalList } = this.state;
+    console.log(needTotalList)
     needTotalList = needTotalList.map(item => ({
       ...item,
       total: selectedRows.reduce((sum, val) => sum + parseFloat(val[item.dataIndex], 10), 0),
@@ -112,11 +124,16 @@ class StandardTable extends PureComponent {
         <Table
           loading={loading}
           rowKey={rowKey || 'key'}
-          rowSelection={rowSelection}
           dataSource={list}
+          rowSelection={rowSelection}
           columns={columns}
           pagination={paginationProps}
           onChange={this.handleTableChange}
+          onRow={(record) => ({
+            onClick: () => {
+              this.selectRow(record);
+            },
+          })}
         />
       </div>
     );
