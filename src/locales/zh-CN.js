@@ -40,6 +40,8 @@ export default {
   'menu.newPage': '新页面',
   'menu.newPage.newPage1': '新页面1',
   'menu.newPage.newPage2': '新页面2',
+  'menu.currencyTable': '通用模块',
+  'menu.currencyTable.currencyTable1': '通用模块1',
   'app.home.introduce': '介绍',
   'app.analysis.test': '工专路 {no} 号店',
   'app.analysis.introduce': '指标说明',

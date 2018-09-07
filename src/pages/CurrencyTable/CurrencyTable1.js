@@ -373,29 +373,14 @@ class CurrencyTable1 extends PureComponent {
       columns:columns,
     }
     return (
-      <PageHeaderWrapper title="新页面">
+      <PageHeaderWrapper title="通用模块1">
         <Card bordered={false}>
           <div className={styles.tableList}>
             {/* <div className={styles.tableListForm}>{this.renderForm()}</div> */}
             <div className={styles.tableListOperator}>
               {btnConfig?this.getAllButton(btnConfig):null}
             </div>
-            <div className={styles.tableListBody}>
-              <div>
-                <Dropdown overlay={menu} className={styles.dropdown}>
-                  <Button>
-                    视图 <Icon type="down" />
-                  </Button>
-                </Dropdown>
-                <StandardTable
-                  selectedRows={selectedRows}
-                  loading={loading}
-                  data={data}
-                  columns={columns}
-                  onSelectRow={this.handleSelectRows}
-                  onChange={this.handleStandardTableChange}
-                />
-              </div>
+            <div>
               <div>
                 <Dropdown overlay={menu} className={styles.dropdown}>
                   <Button>
