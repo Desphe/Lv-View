@@ -25,7 +25,7 @@ import StandardTable from '@/components/StandardTable';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import ViewEditor from '@/components/ViewEditor';
 
-import styles from './NewPage1.less';
+import styles from './CurrencyTable1.less';
 
 const FormItem = Form.Item;
 const { Step } = Steps;
@@ -36,8 +36,6 @@ const getValue = obj =>
   Object.keys(obj)
     .map(key => obj[key])
     .join(',');
-const statusMap = ['default', 'processing', 'success', 'error'];
-const status = ['关闭', '运行中', '已上线', '异常'];
 
 const CreateForm = Form.create()(props => {
   const { modalVisible, form, handleAdd, handleModalVisible } = props;
@@ -72,7 +70,7 @@ export default
   loading: loading.models.rule,
 }))
 @Form.create()
-class NewPage1 extends PureComponent {
+class CurrencyTable1 extends PureComponent {
   state = {
     modalVisible: false,
     updateModalVisible: false,

@@ -11,17 +11,99 @@ for (let i = 0; i < 46; i += 1) {
       'https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png',
       'https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png',
     ][i % 2],
-    name: `TradeCode ${i}`,
-    title: `一个任务名称 ${i}`,
+    name: `合同名称 ${i}`,
+    title: `品牌名称 ${i}`,
     owner: '曲丽丽',
-    desc: '这是一段描述',
+    desc: '这是一份合同名称',
     callNo: Math.floor(Math.random() * 1000),
     status: Math.floor(Math.random() * 10) % 4,
     updatedAt: new Date(`2017-07-${Math.floor(i / 2) + 1}`),
     createdAt: new Date(`2017-07-${Math.floor(i / 2) + 1}`),
     progress: Math.ceil(Math.random() * 100),
+    aaa: "aaa有"+Math.floor(Math.random() * 100)+"个",
+    bbb: "bbb有"+Math.floor(Math.random() * 100)+"个",
+    ccc: "ccc有"+Math.floor(Math.random() * 100)+"个",
   });
 }
+
+let status = ['关闭', '运行中', '已上线', '异常'];
+
+let columns = [
+  {
+    title: '合同名称',
+    dataIndex: 'name',
+    width:400,
+  },
+  {
+    title: '品牌',
+    dataIndex: 'desc',
+    width:400,
+  },
+  {
+    title: '金额',
+    dataIndex: 'callNo',
+    sorter: true,
+    align: 'right',
+    needTotal: true,
+    width:400,
+  },
+  {
+    title: '状态',
+    dataIndex: 'status',
+    filters: [
+      {
+        text: status[0],
+        value: 0,
+      },
+      {
+        text: status[1],
+        value: 1,
+      },
+      {
+        text: status[2],
+        value: 2,
+      },
+      {
+        text: status[3],
+        value: 3,
+      },
+    ],
+    width:400,
+  },
+  {
+    title: '上次调度时间',
+    dataIndex: 'updatedAt',
+    sorter: true,
+    width:400,
+  },
+  {
+    title: 'aaa',
+    dataIndex: 'aaa',
+    sorter: true,
+    align: 'right',
+    width:400,
+  },
+  {
+    title: 'bbb',
+    dataIndex: 'bbb',
+    sorter: true,
+    align: 'right',
+    width:400,
+  },
+  {
+    title: 'ccc',
+    dataIndex: 'ccc',
+    sorter: true,
+    align: 'right',
+    width:400,
+  },
+];
+
+let btnConfig = [
+  { btnName:"新增", funCode:"001", icon:"plus", showType:1, type:"primary" },
+  { btnName:"修改", funCode:"002", icon:"edit", showType:1, type:"primary" },
+  { btnName:"删除", funCode:"003", showType:0, type:"danger" },
+];
 
 function getRule(req, res, u) {
   let url = u;
@@ -65,6 +147,8 @@ function getRule(req, res, u) {
 
   const result = {
     list: dataSource,
+    btnConfig: btnConfig,
+    columns: columns,
     pagination: {
       total: dataSource.length,
       pageSize,

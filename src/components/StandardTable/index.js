@@ -48,8 +48,8 @@ class StandardTable extends PureComponent {
   }
 
   handleRowSelectChange = (selectedRowKeys, selectedRows) => {
+    console.log(selectedRows)
     let { needTotalList } = this.state;
-    console.log(needTotalList)
     needTotalList = needTotalList.map(item => ({
       ...item,
       total: selectedRows.reduce((sum, val) => sum + parseFloat(val[item.dataIndex], 10), 0),
@@ -96,31 +96,26 @@ class StandardTable extends PureComponent {
       }),
     };
 
+    const Footer = (
+      <Fragment>
+        已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
+        {needTotalList.map(item => (
+          <span style={{ marginLeft: 8 }} key={item.dataIndex}>
+            {item.title}
+            总计&nbsp;
+            <span style={{ fontWeight: 600 }}>
+              {item.render ? item.render(item.total) : item.total}
+            </span>
+          </span>
+        ))}
+        <a onClick={this.cleanSelectedKeys} style={{ marginLeft: 24 }}>
+          清空
+        </a>
+      </Fragment>
+    )
+
     return (
       <div className={styles.standardTable}>
-        <div className={styles.tableAlert}>
-          <Alert
-            message={
-              <Fragment>
-                已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
-                {needTotalList.map(item => (
-                  <span style={{ marginLeft: 8 }} key={item.dataIndex}>
-                    {item.title}
-                    总计&nbsp;
-                    <span style={{ fontWeight: 600 }}>
-                      {item.render ? item.render(item.total) : item.total}
-                    </span>
-                  </span>
-                ))}
-                <a onClick={this.cleanSelectedKeys} style={{ marginLeft: 24 }}>
-                  清空
-                </a>
-              </Fragment>
-            }
-            type="info"
-            showIcon
-          />
-        </div>
         <Table
           loading={loading}
           rowKey={rowKey || 'key'}
@@ -134,6 +129,8 @@ class StandardTable extends PureComponent {
               this.selectRow(record);
             },
           })}
+          footer={() => Footer}
+          scroll={{ x: 1300 }}
         />
       </div>
     );
