@@ -1,7 +1,7 @@
-import { queryRule, removeRule, addRule, updateRule } from '@/services/api';
+import { queryRule, removeRule, addRule, updateRule, getRule } from '@/services/api';
 
 export default {
-  namespace: 'newP',
+  namespace: 'rule',
 
   state: {
     data: {
@@ -36,6 +36,14 @@ export default {
     },
     *update({ payload, callback }, { call, put }) {
       const response = yield call(updateRule, payload);
+      yield put({
+        type: 'save',
+        payload: response,
+      });
+      if (callback) callback();
+    },
+    *getInfo({ payload, callback }, { call, put }) {
+      const response = yield call(getRule, payload);
       yield put({
         type: 'save',
         payload: response,

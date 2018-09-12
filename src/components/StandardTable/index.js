@@ -36,6 +36,10 @@ class StandardTable extends PureComponent {
   //   return null;
   // }
 
+  handleDoubleClick = (record) => {
+    console.log(record)
+  }
+
   selectRow = (record) => {
     if(record.disabled) return;
     const selectedRowKeys = [...this.state.selectedRowKeys];
@@ -48,7 +52,6 @@ class StandardTable extends PureComponent {
   }
 
   handleRowSelectChange = (selectedRowKeys, selectedRows) => {
-    console.log(selectedRows)
     let { needTotalList } = this.state;
     needTotalList = needTotalList.map(item => ({
       ...item,
@@ -125,9 +128,12 @@ class StandardTable extends PureComponent {
           pagination={paginationProps}
           onChange={this.handleTableChange}
           onRow={(record) => ({
-            onClick: () => {
-              this.selectRow(record);
-            },
+            // onClick: () => {
+            //   this.selectRow(record);
+            // },
+            onDoubleClick: () => {
+              this.handleDoubleClick(record);
+            } 
           })}
           footer={() => Footer}
           scroll={{ x: 1300 }}

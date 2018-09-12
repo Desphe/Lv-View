@@ -42,6 +42,8 @@ export default {
   'menu.newPage.newPage2': '新页面2',
   'menu.currencyTable': '通用模块',
   'menu.currencyTable.currencyTable1': '通用模块1',
+  'menu.basicConfiguration': '基础配置',
+  'menu.basicConfiguration.listConfiguration': '表配置',
   'app.home.introduce': '介绍',
   'app.analysis.test': '工专路 {no} 号店',
   'app.analysis.introduce': '指标说明',

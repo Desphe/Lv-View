@@ -101,6 +101,23 @@ export default [
         ],
       },
       {
+        name: 'basicConfiguration',
+        icon: 'schedule',
+        path: '/basicConfiguration',
+        routes: [
+          // exception
+          { 
+            path: '/basicConfiguration', 
+            redirect: '/basicConfiguration/listConfiguration' 
+          },
+          {
+            path: '/basicConfiguration/listConfiguration',
+            name: 'listConfiguration',
+            component: './BasicConfiguration/ListConfiguration',
+          },
+        ],
+      },
+      {
         component: '404',
       },
     ],

@@ -4,29 +4,27 @@ import {
   Form,
 } from 'antd';
 import CurrencyTable from '@/components/CurrencyTable';
-import styles from './CurrencyTable1.less';
 
 /* eslint react/no-multi-comp:0 */
 export default
-@connect(({ currencyTable1, loading }) => ({
-  currencyTable1,
-  loading: loading.models.currencyTable1,
+@connect(({ listConfiguration, loading }) => ({
+  listConfiguration,
+  loading: loading.models.listConfiguration,
 }))
 @Form.create()
-class CurrencyTable1 extends PureComponent {
+class ListConfiguration extends PureComponent {
 
-  componentDidMount() {
+  componentWillMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'currencyTable1/fetch',
+      type: 'listConfiguration/fetch',
     });
   }
 
   getInfomation = params => {
-    console.log(params)
     const { dispatch } = this.props;
     dispatch({
-      type: 'currencyTable1/getInfo',
+      type: 'listConfiguration/getInfo',
       payload: params,
     });
   }
@@ -34,17 +32,27 @@ class CurrencyTable1 extends PureComponent {
   handleAdd = fields => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'currencyTable1/add',
+      type: 'listConfiguration/add',
       payload: {
         desc: fields.desc,
       },
     });
   };
 
+  handleDelete = params => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'listConfiguration/remove',
+      payload: params,
+    });
+  }
+
   render() {
     const tableMethod = {
       getInfomation:this.getInfomation,
       handleAdd:this.handleAdd,
+      handleDelete:this.handleDelete,
+      title:name,
     }
 
     return (

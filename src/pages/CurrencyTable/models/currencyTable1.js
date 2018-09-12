@@ -1,7 +1,7 @@
-import { queryRule, removeRule, addRule, updateRule } from '@/services/api';
+import { queryRule, removeRule, addRule, updateRule, getRule } from '@/services/api';
 
 export default {
-  namespace: 'newP',
+  namespace: 'currencyTable1',
 
   state: {
     data: {
@@ -42,6 +42,14 @@ export default {
       });
       if (callback) callback();
     },
+    *getInfo({ payload, callback }, { call, put }) {
+      const response = yield call(getRule, payload);
+      yield put({
+        type: 'save',
+        payload: response,
+      });
+      if (callback) callback();
+    },
   },
 
   reducers: {
@@ -49,6 +57,7 @@ export default {
       return {
         ...state,
         data: action.payload,
+        title:"通用模块1",
       };
     },
   },
