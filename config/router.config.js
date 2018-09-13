@@ -84,23 +84,6 @@ export default [
         ],
       },
       {
-        name: 'currencyTable',
-        icon: 'table',
-        path: '/currencyTable',
-        routes: [
-          // exception
-          { 
-            path: '/currencyTable', 
-            redirect: '/currencyTable/currencyTable1' 
-          },
-          {
-            path: '/currencyTable/currencyTable1',
-            name: 'currencyTable1',
-            component: './CurrencyTable/CurrencyTable1',
-          },
-        ],
-      },
-      {
         name: 'basicConfiguration',
         icon: 'schedule',
         path: '/basicConfiguration',

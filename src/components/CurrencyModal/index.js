@@ -77,7 +77,6 @@ class CurrencyModal extends PureComponent {
     const { getInfomation,selectedRows,handleDelete,cleanSelectRows } = this.props;
     if(name == "删除") {
       if(selectedRows.length > 0) {
-        console.log(selectedRows)
         let params = {
           key: selectedRows.map(row => row.key),
         }

@@ -5,56 +5,114 @@ let tableListDataSource = [];
 for (let i = 0; i < 46; i += 1) {
   tableListDataSource.push({
     key: i,
-    id: i,
-    name: `标题 ${i}`,
-    nameKey: `资源索引 ${i}`,
-    tableName: `表名 ${i}`,
-    type: `类型 ${i}`,
+    disabled: i % 6 === 0,
+    href: 'https://ant.design',
+    avatar: [
+      'https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png',
+      'https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png',
+    ][i % 2],
+    name: `通用表格2 ${i}`,
+    title: `品牌名称 ${i}`,
+    owner: '曲丽丽',
+    desc: '这是一份通用表格2',
+    callNo: Math.floor(Math.random() * 1000),
+    status: Math.floor(Math.random() * 10) % 4,
+    updatedAt: new Date(`2017-07-${Math.floor(i / 2) + 1}`),
+    createdAt: new Date(`2017-07-${Math.floor(i / 2) + 1}`),
+    progress: Math.ceil(Math.random() * 100),
+    aaa: "aaa有"+Math.floor(Math.random() * 100)+"个",
+    bbb: "bbb有"+Math.floor(Math.random() * 100)+"个",
+    ccc: "ccc有"+Math.floor(Math.random() * 100)+"个",
   });
 }
+
+let status = ['关闭', '运行中', '已上线', '异常'];
 
 let columns = [];
 columns = [
   {
-    title: '编号',
-    dataIndex: 'id',
-    isEmpty:true,
-  },
-  {
-    title: '标题',
+    title: '通用表格2',
     dataIndex: 'name',
     isEmpty:true,
+    width:400,
   },
   {
-    title: '资源索引',
-    dataIndex: 'nameKey',
+    title: '品牌',
+    dataIndex: 'desc',
+    isEmpty:true,
+    width:400,
+  },
+  {
+    title: '金额',
+    dataIndex: 'callNo',
     isEmpty:true,
     sorter: true,
     align: 'right',
     needTotal: true,
+    width:400,
   },
   {
-    title: '表名',
-    dataIndex: 'tableName',
+    title: '状态',
+    dataIndex: 'status',
     isEmpty:true,
-    sorter: true
+    filters: [
+      {
+        text: status[0],
+        value: 0,
+      },
+      {
+        text: status[1],
+        value: 1,
+      },
+      {
+        text: status[2],
+        value: 2,
+      },
+      {
+        text: status[3],
+        value: 3,
+      },
+    ],
+    width:400,
   },
   {
-    title: '类型',
-    dataIndex: 'type',
+    title: '上次调度时间',
+    dataIndex: 'updatedAt',
     isEmpty:true,
     sorter: true,
+    width:400,
+  },
+  {
+    title: 'aaa',
+    dataIndex: 'aaa',
+    sorter: true,
+    align: 'right',
+    width:400,
+  },
+  {
+    title: 'bbb',
+    dataIndex: 'bbb',
+    sorter: true,
+    align: 'right',
+    width:400,
+  },
+  {
+    title: 'ccc',
+    dataIndex: 'ccc',
+    sorter: true,
+    align: 'right',
+    width:400,
   },
 ];
 
 let btnConfig = [];
 btnConfig = [
-  { btnName:"新增", funCode:"001", icon:"plus", type:"primary",  },
-  { btnName:"修改", funCode:"002", icon:"edit", type:"primary",  },
-  { btnName:"删除", funCode:"003", icon:"delete", type:"danger",  },
+  { btnName:"新增", funCode:"001", icon:"plus", type:"primary" },
+  { btnName:"修改", funCode:"002", icon:"edit", type:"primary" },
+  { btnName:"删除", funCode:"003", type:"danger" },
 ];
 
-function getApi(req, res, u) {
+function getRule(req, res, u) {
   let url = u;
   if (!url || Object.prototype.toString.call(url) !== '[object String]') {
     url = req.url; // eslint-disable-line
@@ -108,7 +166,7 @@ function getApi(req, res, u) {
   return res.json(result);
 }
 
-function postApi(req, res, u, b) {
+function postRule(req, res, u, b) {
   let url = u;
   if (!url || Object.prototype.toString.call(url) !== '[object String]') {
     url = req.url; // eslint-disable-line
@@ -180,6 +238,6 @@ function postApi(req, res, u, b) {
 }
 
 export default {
-  'GET /basicConfiguration/listConfiguration': getApi,
-  'POST /basicConfiguration/listConfiguration': postApi,
+  'GET /currencyTable/currencyTable2': getRule,
+  'POST /currencyTable/currencyTable2': postRule,
 };

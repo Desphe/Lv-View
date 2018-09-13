@@ -4,47 +4,61 @@ import {
   Form,
 } from 'antd';
 import CurrencyTable from '@/components/CurrencyTable';
-import styles from './CurrencyTable1.less';
+import styles from './IntelligenceTable.less';
 
 /* eslint react/no-multi-comp:0 */
 export default
-@connect(({ currencyTable1, loading }) => ({
-  currencyTable1,
-  loading: loading.models.currencyTable1,
+@connect(({ intelligenceTable, loading }) => ({
+  intelligenceTable,
+  loading: loading.models.intelligenceTable,
 }))
 @Form.create()
 class CurrencyTable1 extends PureComponent {
 
   componentDidMount() {
-    const { dispatch } = this.props;
+    console.log(this.props)
+    const { dispatch, route:{path} } = this.props;
     dispatch({
-      type: 'currencyTable1/fetch',
+      type: 'intelligenceTable/fetch',
+      path: path,
     });
   }
 
   getInfomation = params => {
     console.log(params)
-    const { dispatch } = this.props;
+    const { dispatch, route:{path} } = this.props;
     dispatch({
-      type: 'currencyTable1/getInfo',
+      type: 'intelligenceTable/getInfo',
       payload: params,
+      path: path,
     });
   }
 
   handleAdd = fields => {
-    const { dispatch } = this.props;
+    const { dispatch, route:{path} } = this.props;
     dispatch({
-      type: 'currencyTable1/add',
+      type: 'intelligenceTable/add',
       payload: {
         desc: fields.desc,
       },
+      path: path,
     });
   };
+
+  handleDelete = params => {
+    const { dispatch, route:{path} } = this.props;
+    dispatch({
+      type: 'intelligenceTable/remove',
+      payload: params,
+      path: path,
+    });
+  }
 
   render() {
     const tableMethod = {
       getInfomation:this.getInfomation,
       handleAdd:this.handleAdd,
+      handleDelete:this.handleDelete,
     }
 
     return (

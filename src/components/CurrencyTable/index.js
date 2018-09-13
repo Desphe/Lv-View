@@ -285,11 +285,11 @@ class CurrencyTable extends PureComponent {
       getInfomation,
       handleAdd,
       handleDelete,
+      intelligenceTable,
       title,
     } = this.props;
-    const reducer = this.props[name];
-    if(!reducer) return(<div></div>)
-    const data = reducer.data;
+    const { data } = intelligenceTable;
+    if(!data) return(<div></div>)
 
     const { columns,btnConfig,info } = data;
     const { selectedRows, viewVisible } = this.state;
@@ -322,7 +322,7 @@ class CurrencyTable extends PureComponent {
     };
 
     return (
-      <PageHeaderWrapper title={reducer.title}>
+      <PageHeaderWrapper title={name}>
         <Card bordered={false}>
           <div className={styles.tableList}>
             <div className={styles.tableListForm}>{this.renderForm()}</div>

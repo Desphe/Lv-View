@@ -92,6 +92,9 @@ class BasicLayout extends React.PureComponent {
     dispatch({
       type: 'setting/getSetting',
     });
+    dispatch({
+      type: 'sliderMenus/fetch',
+    });
     this.renderRef = requestAnimationFrame(() => {
       this.setState({
         rendering: false,
@@ -124,10 +127,28 @@ class BasicLayout extends React.PureComponent {
     };
   }
 
+  setComponent(children) {
+    for(var i in children) {
+      let route = children[i].routes;
+      if(route) {
+        for(var j in route) {
+          route[j].component = dynamic({ loader: () => import('../CurrencyTable/IntelligenceTable'), loading: require('E:/Lv-view/src/components/PageLoading/index').default  });
+        }
+        setComponent(route)
+      }
+    }
+    return children;
+  }
+
   getMenuData() {
     const {
       route: { routes },
+      sliderMenus: {data},
     } = this.props;
+    const { sliderMenus } = data;
+    console.log('mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
+    console.log(routes)
+    console.log(sliderMenus)
     return formatter(routes);
   }
 
@@ -275,7 +296,8 @@ class BasicLayout extends React.PureComponent {
   }
 }
 
-export default connect(({ global, setting }) => ({
+export default connect(({ global, setting, sliderMenus }) => ({
+  sliderMenus,
   collapsed: global.collapsed,
   layout: setting.layout,
   ...setting,
