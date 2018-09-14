@@ -12,7 +12,7 @@ export default {
 
   effects: {
     *fetch({ payload ,path }, { call, put }) {
-      const response = yield call(queryIntelligenceTable, payload={}, path);
+      const response = yield call(queryIntelligenceTable, payload, path);
       yield put({
         type: 'save',
         path: path,

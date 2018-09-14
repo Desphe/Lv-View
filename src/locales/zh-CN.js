@@ -190,4 +190,53 @@ export default {
   'app.setting.copyinfo': '拷贝成功，请到 src/defaultSettings.js 中替换默认配置',
   'app.setting.production.hint':
     '配置栏只在开发环境用于预览，生产环境不会展现，请拷贝后手动修改配置文件',
+
+
+
+  'menu.userMessage': '用户管理',
+  'menu.userMessage.userMessage': '用户管理',
+  'menu.userMessage.roleMessage': '角色管理',
+  'menu.userMessage.authorityMessage': '权限管理',
+  'menu.systemMessage': '系统管理',
+  'menu.systemMessage.systemSetup': '系统设置',
+  'menu.systemMessage.logMessage': '日志管理',
+  'menu.dataMessage': '主数据管理',
+  'menu.dataMessage.institutionMessage': '机构信息管理',
+  'menu.dataMessage.customerData': '客户主数据',
+  'menu.dataMessage.channelData': '渠道信息表',
+  'menu.dataMessage.customerAccount': '客户账号信息表',
+  'menu.dataMessage.customer': '客户信息表',
+  'menu.dataMessage.brand': '品牌信息表',
+  'menu.dataMessage.OverduePayment': '付款逾期原因配置表',
+  'menu.dataMessage.SalesArea': '销售区域信息表',
+  'menu.dataMessage.CustomerContract': '客户合同信息',
+  'menu.creditControlMessage': '信用控制管理',
+  'menu.creditControlMessage.functionalConfig': '功能配置',
+  'menu.creditControlMessage.dataInitialization': '数据初始化',
+  'menu.creditControlMessage.salesAccountData': '销项账面数据',
+  'menu.creditControlMessage.salesInvoiceData': '销项发票数据',
+  'menu.creditControlMessage.salesComparison': '销项比对',
+  'menu.creditControlMessage.bankReceiptsData': '银行收款数据',
+  'menu.creditControlMessage.receivablesComparison': '收款比对',
+  'menu.creditControlMessage.generatingVoucher': '生成凭证',
+  'menu.creditControlMessage.salesOverdueOrder': '销售单付款逾期原因维护',
+  'menu.creditControlMessage.salesNotInvoiced': '销售但未开票提醒表',
+  'menu.creditControlMessage.bankReceipts': '银行收款分类统计表',
+  'menu.creditControlMessage.accountsCollection': '应收账款催收表',
+  'menu.creditControlMessage.accountsAge': '应收账款账龄表',
+  'menu.creditControlMessage.accountsAgeAnalysis': '应收账款账龄分析表',
+  'menu.creditControlMessage.accountsTurnoverDays': '应收账款周转天数表',
+  'menu.creditControlMessage.commodityMarginReminder': '商品毛利提醒',
+  'menu.creditControlMessage.contractRenewalReminder': '合同更新提醒表',
+  'menu.advancePaymentManagement': '预付款管理',
 };
+
+
+
+
+
+
+
+
+
+

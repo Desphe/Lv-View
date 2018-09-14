@@ -42,7 +42,7 @@ class CurrencyTable extends PureComponent {
   };
 
   handleStandardTableChange = (pagination, filtersArg, sorter) => {
-    const { dispatch } = this.props;
+    const { loadData } = this.props;
     const { formValues } = this.state;
 
     const filters = Object.keys(filtersArg).reduce((obj, key) => {
@@ -61,22 +61,16 @@ class CurrencyTable extends PureComponent {
       params.sorter = `${sorter.field}_${sorter.order}`;
     }
 
-    dispatch({
-      type: 'rule/fetch',
-      payload: params,
-    });
+    loadData(params)
   };
 
   handleFormReset = () => {
-    const { form, dispatch } = this.props;
+    const { form, loadData } = this.props;
     form.resetFields();
     this.setState({
       formValues: {},
     });
-    dispatch({
-      type: 'rule/fetch',
-      payload: {},
-    });
+    loadData({});
   };
 
   toggleForm = () => {
@@ -101,24 +95,24 @@ class CurrencyTable extends PureComponent {
   handleSearch = e => {
     e.preventDefault();
 
-    const { dispatch, form } = this.props;
+    const { loadData, form } = this.props;
 
     form.validateFields((err, fieldsValue) => {
       if (err) return;
 
       const values = {
         ...fieldsValue,
-        updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
+        //updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
       };
+
+      console.log(values)
+      console.log(fieldsValue)
 
       this.setState({
         formValues: values,
       });
 
-      dispatch({
-        type: 'rule/fetch',
-        payload: values,
-      });
+      loadData(values)
     });
   };
 
@@ -143,28 +137,38 @@ class CurrencyTable extends PureComponent {
     this.handleUpdateModalVisible();
   };
 
-  renderSimpleForm() {
+  getFormCol(fields,type) {
     const {
       form: { getFieldDecorator },
     } = this.props;
+    return fields.map((field,i) => {
+      if(type == "simple") {
+        if(i<2) {
+          return(
+            <Col md={8} sm={24} key={type+i}>
+              <FormItem label={field.title}>
+                {getFieldDecorator(field.dataIndex)(<Input placeholder="请输入" />)}
+              </FormItem>
+            </Col>
+          )
+        }
+      }else{
+        return(
+          <Col md={8} sm={24} key={type+i}>
+            <FormItem label={field.title}>
+              {getFieldDecorator(field.dataIndex)(<Input placeholder="请输入" />)}
+            </FormItem>
+          </Col>
+        )
+      }
+    })
+  }
+
+  renderSimpleForm(fields) {
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-          <Col md={8} sm={24}>
-            <FormItem label="规则名称">
-              {getFieldDecorator('name')(<Input placeholder="请输入" />)}
-            </FormItem>
-          </Col>
-          <Col md={8} sm={24}>
-            <FormItem label="使用状态">
-              {getFieldDecorator('status')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="0">关闭</Option>
-                  <Option value="1">运行中</Option>
-                </Select>
-              )}
-            </FormItem>
-          </Col>
+          {this.getFormCol(fields,"simple")}
           <Col md={8} sm={24}>
             <span className={styles.submitButtons}>
               <Button type="primary" htmlType="submit">
@@ -183,14 +187,12 @@ class CurrencyTable extends PureComponent {
     );
   }
 
-  renderAdvancedForm() {
-    const {
-      form: { getFieldDecorator },
-    } = this.props;
+  renderAdvancedForm(fields) {
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-          <Col md={8} sm={24}>
+          {this.getFormCol(fields,"advanced")}
+          {/* <Col md={8} sm={24}>
             <FormItem label="规则名称">
               {getFieldDecorator('name')(<Input placeholder="请输入" />)}
             </FormItem>
@@ -238,7 +240,7 @@ class CurrencyTable extends PureComponent {
                 </Select>
               )}
             </FormItem>
-          </Col>
+          </Col> */}
         </Row>
         <div style={{ overflow: 'hidden' }}>
           <div style={{ float: 'right', marginBottom: 24 }}>
@@ -257,9 +259,9 @@ class CurrencyTable extends PureComponent {
     );
   }
 
-  renderForm() {
+  renderForm(fields) {
     const { expandForm } = this.state;
-    return expandForm ? this.renderAdvancedForm() : this.renderSimpleForm();
+    return expandForm ? this.renderAdvancedForm(fields) : this.renderSimpleForm(fields);
   }
 
   handleViewVisible = (flag) => {
@@ -286,12 +288,11 @@ class CurrencyTable extends PureComponent {
       handleAdd,
       handleDelete,
       intelligenceTable,
-      title,
     } = this.props;
     const { data } = intelligenceTable;
     if(!data) return(<div></div>)
 
-    const { columns,btnConfig,info } = data;
+    const { columns,btnConfig,info,title } = data;
     const { selectedRows, viewVisible } = this.state;
     if(!columns||!btnConfig) return(<div></div>)
 
@@ -322,10 +323,10 @@ class CurrencyTable extends PureComponent {
     };
 
     return (
-      <PageHeaderWrapper title={name}>
+      <PageHeaderWrapper title={title}>
         <Card bordered={false}>
           <div className={styles.tableList}>
-            <div className={styles.tableListForm}>{this.renderForm()}</div>
+            <div className={styles.tableListForm}>{this.renderForm(columns)}</div>
             <CurrencyModal {...buttonMethods} />
             <div>
               <div>

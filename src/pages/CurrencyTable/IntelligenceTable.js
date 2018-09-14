@@ -13,44 +13,46 @@ export default
   loading: loading.models.intelligenceTable,
 }))
 @Form.create()
-class CurrencyTable1 extends PureComponent {
+class IntelligenceTable extends PureComponent {
 
   componentDidMount() {
-    console.log(this.props)
-    const { dispatch, route:{path} } = this.props;
+    this.loadData()
+  }
+
+  loadData = (params) => {
+    const { dispatch, location:{pathname} } = this.props;
     dispatch({
       type: 'intelligenceTable/fetch',
-      path: path,
+      path: pathname,
+      payload: params,
     });
   }
 
   getInfomation = params => {
-    console.log(params)
-    const { dispatch, route:{path} } = this.props;
+    const { dispatch, location:{pathname} } = this.props;
     dispatch({
       type: 'intelligenceTable/getInfo',
       payload: params,
-      path: path,
+      path: pathname,
     });
   }
 
   handleAdd = fields => {
-    const { dispatch, route:{path} } = this.props;
+    console.log(fields)
+    const { dispatch, location:{pathname} } = this.props;
     dispatch({
       type: 'intelligenceTable/add',
-      payload: {
-        desc: fields.desc,
-      },
-      path: path,
+      payload: fields,
+      path: pathname,
     });
   };
 
   handleDelete = params => {
-    const { dispatch, route:{path} } = this.props;
+    const { dispatch, location:{pathname} } = this.props;
     dispatch({
       type: 'intelligenceTable/remove',
       payload: params,
-      path: path,
+      path: pathname,
     });
   }
 
@@ -59,6 +61,7 @@ class CurrencyTable1 extends PureComponent {
       getInfomation:this.getInfomation,
       handleAdd:this.handleAdd,
       handleDelete:this.handleDelete,
+      loadData:this.loadData,
     }
 
     return (

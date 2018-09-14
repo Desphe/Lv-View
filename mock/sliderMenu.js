@@ -16,12 +16,12 @@ sliderMenus = [
       {
         path: '/currencyTable/currencyTable1',
         name: '通用模块1',
-        component: '../CurrencyTable/IntelligenceTable',
+        component: '/CurrencyTable/IntelligenceTable',
       },
       {
         path: '/currencyTable/currencyTable2',
         name: '通用模块2',
-        component: '../CurrencyTable/IntelligenceTable',
+        component: '/CurrencyTable/IntelligenceTable',
       },
     ],
   },

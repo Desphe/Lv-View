@@ -16,6 +16,7 @@ import logo from '../assets/logo.svg';
 import Footer from './Footer';
 import Header from './Header';
 import Context from './MenuContext';
+import dynamic from 'umi/dynamic';
 
 const { Content } = Layout;
 const { check } = Authorized;
@@ -132,9 +133,9 @@ class BasicLayout extends React.PureComponent {
       let route = children[i].routes;
       if(route) {
         for(var j in route) {
-          route[j].component = dynamic({ loader: () => import('../CurrencyTable/IntelligenceTable'), loading: require('E:/Lv-view/src/components/PageLoading/index').default  });
+          route[j].component = dynamic({ loader: () => import('../pages/CurrencyTable/IntelligenceTable'), loading: require('E:/Lv-view/src/components/PageLoading/index').default  });
         }
-        setComponent(route)
+        this.setComponent(route)
       }
     }
     return children;
@@ -146,9 +147,7 @@ class BasicLayout extends React.PureComponent {
       sliderMenus: {data},
     } = this.props;
     const { sliderMenus } = data;
-    console.log('mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
-    console.log(routes)
-    console.log(sliderMenus)
+    let newRoutes = sliderMenus;
     return formatter(routes);
   }
 

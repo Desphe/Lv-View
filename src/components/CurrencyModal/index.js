@@ -89,7 +89,7 @@ class CurrencyModal extends PureComponent {
       if(flag&&name == "修改") {
         if(selectedRows.length > 0) {
           let params = {
-            key: [selectedRows[0].key],
+            key: selectedRows[0].key,
           }
           getInfomation(params)
         }else{
