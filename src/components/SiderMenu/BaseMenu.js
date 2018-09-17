@@ -22,8 +22,14 @@ const getIcon = icon => {
   return icon;
 };
 
-export const getMenuMatches = (flatMenuKeys, path) =>
-  flatMenuKeys.filter(item => item && pathToRegexp(item).test(path));
+export const getMenuMatches = (arrFlatMenuKeys, path) =>{
+  const arr = arrFlatMenuKeys.filter(item => {
+    const regex = pathToRegexp(item);
+    return item && regex.test(path)
+  });
+  return arr;
+}
+
 
 export default class BaseMenu extends PureComponent {
   constructor(props) {
@@ -70,7 +76,10 @@ export default class BaseMenu extends PureComponent {
     const {
       location: { pathname },
     } = this.props;
-    return urlToList(pathname).map(itemPath => getMenuMatches(this.flatMenuKeys, itemPath).pop());
+    return urlToList(pathname).map(itemPath => {
+      const arr = getMenuMatches(this.flatMenuKeys, itemPath).pop()
+      return arr;
+    });
   };
 
   /**

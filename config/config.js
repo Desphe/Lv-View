@@ -6,7 +6,6 @@ import defaultSettings from '../src/defaultSettings';
 
 export default {
   // add for transfer to umi
-  history: 'hash', // 默认是 browser
   plugins: [
     [
       'umi-plugin-react',
@@ -26,19 +25,13 @@ export default {
         polyfills: ['ie11'],
         ...(!process.env.TEST && os.platform() === 'darwin'
           ? {
-              dll: {
-                include: ['dva', 'dva/router', 'dva/saga', 'dva/fetch'],
-                exclude: ['@babel/runtime'],
-              },
+              dll: ['dva', 'dva/router', 'dva/saga', 'dva/fetch'],
               hardSource: true,
             }
           : {}),
       },
     ],
   ],
-  define: {
-    APP_TYPE: process.env.APP_TYPE || '',
-  },
   // 路由配置
   routes: pageRoutes,
   // Theme for antd

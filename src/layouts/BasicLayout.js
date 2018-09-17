@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import React from 'react';
 import { Layout } from 'antd';
 import DocumentTitle from 'react-document-title';
@@ -16,7 +17,6 @@ import logo from '../assets/logo.svg';
 import Footer from './Footer';
 import Header from './Header';
 import Context from './MenuContext';
-import dynamic from 'umi/dynamic';
 
 const { Content } = Layout;
 const { check } = Authorized;
@@ -93,9 +93,6 @@ class BasicLayout extends React.PureComponent {
     dispatch({
       type: 'setting/getSetting',
     });
-    dispatch({
-      type: 'sliderMenus/fetch',
-    });
     this.renderRef = requestAnimationFrame(() => {
       this.setState({
         rendering: false,
@@ -128,27 +125,80 @@ class BasicLayout extends React.PureComponent {
     };
   }
 
-  setComponent(children) {
-    for(var i in children) {
-      let route = children[i].routes;
-      if(route) {
-        for(var j in route) {
-          route[j].component = dynamic({ loader: () => import('../pages/CurrencyTable/IntelligenceTable'), loading: require('E:/Lv-view/src/components/PageLoading/index').default  });
-        }
-        this.setComponent(route)
-      }
-    }
-    return children;
-  }
-
   getMenuData() {
     const {
       route: { routes },
-      sliderMenus: {data},
     } = this.props;
-    const { sliderMenus } = data;
-    let newRoutes = sliderMenus;
     return formatter(routes);
+  }
+
+  getRemoteMenuData(){
+    const arr = [];// this.getMenuData();
+    arr.push({
+      name:'app.analysis.search-users',
+      path:'/system',
+      icon:"dashboard",
+      locale:"menu.system",
+      children:[
+        {
+          name:'menu.system.menuManage',
+          path:'/system/menuManage',
+          icon:"dashboard",
+          locale:"menu.system.menuManage",
+        },
+        {
+          name:'menu.system.user',
+          path:'/system/user',
+          icon:"dashboard",
+          locale:"menu.system.user",
+        },
+        {
+          name:'menu.system.role',
+          path:'/system/role',
+          icon:"dashboard",
+          locale:"menu.system.role",
+        },
+        {
+          name:'menu.system.funmodule',
+          path:'/system/funmodule',
+          icon:"dashboard",
+          locale:"menu.system.funmodule",
+        },
+      ]
+    });
+    arr.push({
+      name:'app.analysis.search-users',
+      path:'/build',
+      icon:"dashboard",
+      locale:"menu.build",
+      children:[
+        {
+          name:'menu.build.listConfig',
+          path:'/build/list_build/user',
+          icon:"dashboard",
+          locale:"menu.build.listBuild",
+        },
+        {
+          name:'menu.dashboard.analysis',
+          path:'/build/list_build/dept',
+          icon:"dashboard",
+          locale:"menu.dashboard.analysis",
+        },
+        {
+          name:'menu.build.listConfig',
+          path:'/build/list_config',
+          icon:"dashboard",
+          locale:"menu.build.listConfig",
+        },
+        {
+          name:'menu.build.dataCompare',
+          path:'/build/data_compare',
+          icon:"dashboard",
+          locale:"menu.build.dataCompare",
+        }
+      ]
+    })
+    return arr;
   }
 
   /**
@@ -166,7 +216,7 @@ class BasicLayout extends React.PureComponent {
         routerMap[menuItem.path] = menuItem;
       });
     };
-    mergeMenuAndRouter(this.getMenuData());
+    mergeMenuAndRouter(this.getRemoteMenuData());
     return routerMap;
   }
 
@@ -244,7 +294,7 @@ class BasicLayout extends React.PureComponent {
     } = this.props;
     const { rendering, isMobile } = this.state;
     const isTop = PropsLayout === 'topmenu';
-    const menuData = this.getMenuData();
+    const menuData = this.getRemoteMenuData();
     const layout = (
       <Layout>
         {isTop && !isMobile ? null : (
@@ -295,8 +345,7 @@ class BasicLayout extends React.PureComponent {
   }
 }
 
-export default connect(({ global, setting, sliderMenus }) => ({
-  sliderMenus,
+export default connect(({ global, setting }) => ({
   collapsed: global.collapsed,
   layout: setting.layout,
   ...setting,

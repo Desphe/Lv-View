@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import config from './typeConfig';
 import styles from './index.less';
 
-class Exception extends React.PureComponent {
+class Excrption extends React.PureComponent {
   static defaultProps = {
     backText: 'back to home',
   };
@@ -56,4 +56,4 @@ class Exception extends React.PureComponent {
   }
 }
 
-export default Exception;
+export default Excrption;

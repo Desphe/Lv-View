@@ -24,31 +24,16 @@ class StandardTable extends PureComponent {
     };
   }
 
-  // static getDerivedStateFromProps(nextProps) {
-  //   // clean state
-  //   if (nextProps.selectedRows.length === 0) {
-  //     const needTotalList = initTotalList(nextProps.columns);
-  //     return {
-  //       selectedRowKeys: [],
-  //       needTotalList,
-  //     };
-  //   }
-  //   return null;
-  // }
-
-  handleDoubleClick = (record) => {
-    console.log(record)
-  }
-
-  selectRow = (record) => {
-    if(record.disabled) return;
-    const selectedRowKeys = [...this.state.selectedRowKeys];
-    if (selectedRowKeys.indexOf(record.key) >= 0) {
-      selectedRowKeys.splice(selectedRowKeys.indexOf(record.key), 1);
-    } else {
-      selectedRowKeys.push(record.key);
+  static getDerivedStateFromProps(nextProps) {
+    // clean state
+    if (nextProps.selectedRows.length === 0) {
+      const needTotalList = initTotalList(nextProps.columns);
+      return {
+        selectedRowKeys: [],
+        needTotalList,
+      };
     }
-    this.setState({ selectedRowKeys });
+    return null;
   }
 
   handleRowSelectChange = (selectedRowKeys, selectedRows) => {
@@ -99,44 +84,39 @@ class StandardTable extends PureComponent {
       }),
     };
 
-    const Footer = (
-      <Fragment>
-        已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
-        {needTotalList.map(item => (
-          <span style={{ marginLeft: 8 }} key={item.dataIndex}>
-            {item.title}
-            总计&nbsp;
-            <span style={{ fontWeight: 600 }}>
-              {item.render ? item.render(item.total) : item.total}
-            </span>
-          </span>
-        ))}
-        <a onClick={this.cleanSelectedKeys} style={{ marginLeft: 24 }}>
-          清空
-        </a>
-      </Fragment>
-    )
-
     return (
       <div className={styles.standardTable}>
+        <div className={styles.tableAlert}>
+          <Alert
+            message={
+              <Fragment>
+                已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
+                {needTotalList.map(item => (
+                  <span style={{ marginLeft: 8 }} key={item.dataIndex}>
+                    {item.title}
+                    总计&nbsp;
+                    <span style={{ fontWeight: 600 }}>
+                      {item.render ? item.render(item.total) : item.total}
+                    </span>
+                  </span>
+                ))}
+                <a onClick={this.cleanSelectedKeys} style={{ marginLeft: 24 }}>
+                  清空
+                </a>
+              </Fragment>
+            }
+            type="info"
+            showIcon
+          />
+        </div>
         <Table
           loading={loading}
           rowKey={rowKey || 'key'}
-          dataSource={list}
           rowSelection={rowSelection}
+          dataSource={list}
           columns={columns}
           pagination={paginationProps}
           onChange={this.handleTableChange}
-          onRow={(record) => ({
-            // onClick: () => {
-            //   this.selectRow(record);
-            // },
-            onDoubleClick: () => {
-              this.handleDoubleClick(record);
-            } 
-          })}
-          footer={() => Footer}
-          scroll={{ x: 1300 }}
         />
       </div>
     );

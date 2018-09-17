@@ -4,27 +4,69 @@ import { parse } from 'url';
 let sliderMenus = [];
 sliderMenus = [
   {
-    name: 'currencyTable',
-    icon: 'table',
-    path: '/currencyTable',
-    routes: [
-      // exception
-      { 
-        path: '/currencyTable', 
-        redirect: '/currencyTable/currencyTable1',
+    name:'app.analysis.search-users',
+    path:'/system',
+    icon:"dashboard",
+    locale:"menu.system",
+    children:[
+      {
+        name:'menu.system.menu',
+        path:'/system/menu',
+        icon:"dashboard",
+        locale:"menu.system.menu",
       },
       {
-        path: '/currencyTable/currencyTable1',
-        name: '通用模块1',
-        component: '/CurrencyTable/IntelligenceTable',
+        name:'menu.system.user',
+        path:'/system/user',
+        icon:"dashboard",
+        locale:"menu.system.user",
       },
       {
-        path: '/currencyTable/currencyTable2',
-        name: '通用模块2',
-        component: '/CurrencyTable/IntelligenceTable',
+        name:'menu.system.role',
+        path:'/system/role',
+        icon:"dashboard",
+        locale:"menu.system.role",
       },
-    ],
+      {
+        name:'menu.system.funmodule',
+        path:'/system/funmodule',
+        icon:"dashboard",
+        locale:"menu.system.funmodule",
+      },
+    ]
   },
+  {
+    name:'app.analysis.search-users',
+    path:'/build',
+    icon:"dashboard",
+    locale:"menu.build",
+    children:[
+      {
+        name:'menu.build.listConfig',
+        path:'/build/list_build/user',
+        icon:"dashboard",
+        locale:"menu.build.listBuild",
+      },
+      {
+        name:'menu.dashboard.analysis',
+        path:'/build/list_build/dept',
+        icon:"dashboard",
+        locale:"menu.dashboard.analysis",
+      },
+      {
+        name:'menu.build.listConfig',
+        path:'/build/list_config',
+        icon:"dashboard",
+        locale:"menu.build.listConfig",
+      },
+      {
+        name:'menu.build.dataCompare',
+        path:'/build/data_compare',
+        icon:"dashboard",
+        locale:"menu.build.dataCompare",
+      }
+    ]
+  }
   // {
   //   name: 'configurationPage',
   //   icon: 'table',

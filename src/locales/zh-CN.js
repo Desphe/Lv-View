@@ -2,6 +2,17 @@
 
 export default {
   'navbar.lang': 'English',
+  'menu.system':'系统管理',
+  'menu.system.menuManage':'菜单配置',
+  'menu.system.user':'用户管理',
+  'menu.system.role':'角色管理',
+  'menu.system.funmodule':'功能模块配置',
+  
+  'menu.build': '自动构建',
+  'menu.build.listBuild': '列表生成',
+  'menu.build.listConfig': '列表配置管理',
+  'menu.build.formConfig': '表单配置管理',
+  'menu.build.dataCompare': '数据比对',
   'menu.home': '首页',
   'menu.dashboard': 'Dashboard',
   'menu.dashboard.analysis': '分析页',
@@ -37,16 +48,6 @@ export default {
   'menu.account.center': '个人中心',
   'menu.account.settings': '个人设置',
   'menu.account.trigger': '触发报错',
-  'menu.newPage': '新页面',
-  'menu.newPage.newPage1': '新页面1',
-  'menu.newPage.newPage2': '新页面2',
-  'menu.currencyTable': '通用模块',
-  'menu.currencyTable.通用模块1': '通用模块1',
-  'menu.currencyTable.通用模块2': '通用模块2',
-  'menu.configurationPage': '配置页面',
-  'menu.configurationPage.第一个配置出来的页面': '第一个配置出来的页面',
-  'menu.basicConfiguration': '基础配置',
-  'menu.basicConfiguration.listConfiguration': '表配置',
   'app.home.introduce': '介绍',
   'app.analysis.test': '工专路 {no} 号店',
   'app.analysis.introduce': '指标说明',
@@ -190,53 +191,4 @@ export default {
   'app.setting.copyinfo': '拷贝成功，请到 src/defaultSettings.js 中替换默认配置',
   'app.setting.production.hint':
     '配置栏只在开发环境用于预览，生产环境不会展现，请拷贝后手动修改配置文件',
-
-
-
-  'menu.userMessage': '用户管理',
-  'menu.userMessage.userMessage': '用户管理',
-  'menu.userMessage.roleMessage': '角色管理',
-  'menu.userMessage.authorityMessage': '权限管理',
-  'menu.systemMessage': '系统管理',
-  'menu.systemMessage.systemSetup': '系统设置',
-  'menu.systemMessage.logMessage': '日志管理',
-  'menu.dataMessage': '主数据管理',
-  'menu.dataMessage.institutionMessage': '机构信息管理',
-  'menu.dataMessage.customerData': '客户主数据',
-  'menu.dataMessage.channelData': '渠道信息表',
-  'menu.dataMessage.customerAccount': '客户账号信息表',
-  'menu.dataMessage.customer': '客户信息表',
-  'menu.dataMessage.brand': '品牌信息表',
-  'menu.dataMessage.OverduePayment': '付款逾期原因配置表',
-  'menu.dataMessage.SalesArea': '销售区域信息表',
-  'menu.dataMessage.CustomerContract': '客户合同信息',
-  'menu.creditControlMessage': '信用控制管理',
-  'menu.creditControlMessage.functionalConfig': '功能配置',
-  'menu.creditControlMessage.dataInitialization': '数据初始化',
-  'menu.creditControlMessage.salesAccountData': '销项账面数据',
-  'menu.creditControlMessage.salesInvoiceData': '销项发票数据',
-  'menu.creditControlMessage.salesComparison': '销项比对',
-  'menu.creditControlMessage.bankReceiptsData': '银行收款数据',
-  'menu.creditControlMessage.receivablesComparison': '收款比对',
-  'menu.creditControlMessage.generatingVoucher': '生成凭证',
-  'menu.creditControlMessage.salesOverdueOrder': '销售单付款逾期原因维护',
-  'menu.creditControlMessage.salesNotInvoiced': '销售但未开票提醒表',
-  'menu.creditControlMessage.bankReceipts': '银行收款分类统计表',
-  'menu.creditControlMessage.accountsCollection': '应收账款催收表',
-  'menu.creditControlMessage.accountsAge': '应收账款账龄表',
-  'menu.creditControlMessage.accountsAgeAnalysis': '应收账款账龄分析表',
-  'menu.creditControlMessage.accountsTurnoverDays': '应收账款周转天数表',
-  'menu.creditControlMessage.commodityMarginReminder': '商品毛利提醒',
-  'menu.creditControlMessage.contractRenewalReminder': '合同更新提醒表',
-  'menu.advancePaymentManagement': '预付款管理',
 };
-
-
-
-
-
-
-
-
-
-

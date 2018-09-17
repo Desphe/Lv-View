@@ -1,175 +1,132 @@
-import React, { PureComponent, Fragment } from 'react';
-import { connect } from 'dva';
-import moment from 'moment';
-import {
-  Row,
+import React, { PureComponent ,Fragment} from 'react';
+import { connect } from 'dva/index';
+import { Row,
   Col,
   Card,
   Form,
-  Input,
-  Select,
   Icon,
   Button,
-  InputNumber,
-  DatePicker,
-  Modal,
-  message,
-  Steps,
-  Radio,
   Dropdown,
   Menu,
-} from 'antd';
-import StandardTable from '@/components/StandardTable';
-import CurrencyModal from '@/components/CurrencyModal';
+  Table,
+  notification,
+  Divider } from 'antd';
+
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-import ViewEditor from '@/components/ViewEditor';
-
 import styles from './index.less';
+import FormBuild from '@/components/FormBuild';
+import CurrencyButton from '@/components/CurrencyButton';
+// import notices from '../../../mock/notices';
 
-const FormItem = Form.Item;
-const { Option } = Select;
-const getValue = obj =>
-  Object.keys(obj)
-    .map(key => obj[key])
-    .join(',');
-
-class CurrencyTable extends PureComponent {
-  state = {
-    expandForm: false,
-    selectedRows: [],
-    formValues: {},
-    viewVisible: false,
-  };
-
-  handleStandardTableChange = (pagination, filtersArg, sorter) => {
-    const { loadData } = this.props;
-    const { formValues } = this.state;
-
-    const filters = Object.keys(filtersArg).reduce((obj, key) => {
-      const newObj = { ...obj };
-      newObj[key] = getValue(filtersArg[key]);
-      return newObj;
-    }, {});
-
-    const params = {
-      currentPage: pagination.current,
-      pageSize: pagination.pageSize,
-      ...formValues,
-      ...filters,
+export default
+@connect(({ formBuild }) => ({
+  formBuild,
+}))
+@Form.create()
+class CurrencyTable extends PureComponent{
+  constructor(props){
+    super();
+    const { tbCode } = props;
+    this.state = {
+      tbCode,
+      selectedRowKeys: [],
+      pagination:{
+        showSizeChanger:true,
+      },
+      modal:{
+        visible:false,
+        content:(<div>&nbsp;</div>),
+      },
     };
-    if (sorter.field) {
-      params.sorter = `${sorter.field}_${sorter.order}`;
+  }
+
+  // 列表数据
+  loadPageSplit = (filter,page,sort)=> {
+    const { loadPageSplit } = this.props;
+    const { tbCode } = this.state;
+    let params = {
+      tbCode,
+      filter:{...filter},
+      sortField:sort.sortField || null,
+      sortOrder:sort.sortOrder || null,
+      pageIndex:page.current,
+      pageSize:page.pageSize,
     }
+    loadPageSplit(params)
+  }
 
-    loadData(params)
-  };
+  // componentWillReceiveProps(nextProp){
+  //   const { match:{params} } = nextProp;
+  //   const { tbCode } = this.state;
+  //   if (tbCode!==params.tbCode) {
+  //     this.setState({
+  //       tbCode:params.tbCode,
+  //     },this.loadData);
+  //   }
+  // }
 
-  handleFormReset = () => {
-    const { form, loadData } = this.props;
-    form.resetFields();
-    this.setState({
-      formValues: {},
-    });
-    loadData({});
-  };
+  // 表格上方下拉菜单点击事件
+  handleTopMenuClick=(obj)=>{
+    this.handleTopBtnClick({funCode:obj.key,key:'',source:'btn'});
+  }
 
-  toggleForm = () => {
-    const { expandForm } = this.state;
-    this.setState({
-      expandForm: !expandForm,
-    });
-  };
+  // 表格checkbox选择事件
+  onSelectChange = (selectedRowKeys) => {
+    this.setState({ selectedRowKeys });
+  }
 
-  handleSelectRows = rows => {
-    this.setState({
-      selectedRows: rows,
-    });
-  };
+  // 分页
+  handleTableChange = (paginationarg, filters, sorter) => {
+    const { form } = this.props;
+    // const { pagination } = this.state;
 
-  cleanSelectRows = () => {
-    this.setState({
-      selectedRows: [],
+    form.validateFields((err, fieldsValue) =>{
+      if (err) return;
+
+      const arrFv = {};
+      Object.keys(fieldsValue).forEach(key=>{
+        if (fieldsValue[key]!==null && fieldsValue[key]!=='') {
+          arrFv[key] = fieldsValue[key];
+        }
+      });
+
+      this.setState({
+        pagination:paginationarg
+      },()=>this.loadPageSplit({...filters,...arrFv},paginationarg,{sortField:sorter.field,sortOrder:sorter.order}));
     });
   }
 
+  // 查询按钮
   handleSearch = e => {
     e.preventDefault();
-
-    const { loadData, form } = this.props;
+    const { form } = this.props;
+    const { pagination } = this.state;
 
     form.validateFields((err, fieldsValue) => {
       if (err) return;
 
-      const values = {
-        ...fieldsValue,
-        //updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
-      };
-
-      console.log(values)
-      console.log(fieldsValue)
-
-      this.setState({
-        formValues: values,
+      const arrFv = {};
+      Object.keys(fieldsValue).forEach(key=>{
+        if (fieldsValue[key]!==null && fieldsValue[key]!=='') {
+          arrFv[key] = fieldsValue[key];
+        }
       });
 
-      loadData(values)
+      this.loadPageSplit({...arrFv},{current:1,pageSize:pagination.pageSize},{});
     });
   };
 
-  handleUpdateModalVisible = (flag) => {
-    this.setState({
-      updateModalVisible: !!flag,
-    });
-  };
-
-  handleUpdate = fields => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'rule/update',
-      payload: {
-        name: fields.name,
-        desc: fields.desc,
-        key: fields.key,
-      },
-    });
-
-    message.success('配置成功');
-    this.handleUpdateModalVisible();
-  };
-
-  getFormCol(fields,type) {
-    const {
-      form: { getFieldDecorator },
-    } = this.props;
-    return fields.map((field,i) => {
-      if(type == "simple") {
-        if(i<2) {
-          return(
-            <Col md={8} sm={24} key={type+i}>
-              <FormItem label={field.title}>
-                {getFieldDecorator(field.dataIndex)(<Input placeholder="请输入" />)}
-              </FormItem>
-            </Col>
-          )
-        }
-      }else{
-        return(
-          <Col md={8} sm={24} key={type+i}>
-            <FormItem label={field.title}>
-              {getFieldDecorator(field.dataIndex)(<Input placeholder="请输入" />)}
-            </FormItem>
-          </Col>
-        )
-      }
-    })
-  }
-
-  renderSimpleForm(fields) {
+  // 搜索表单
+  renderSimpleForm(fieldConfig) {
+    const { form } = this.props;
+    const { getFieldDecorator } = form;
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-          {this.getFormCol(fields,"simple")}
-          <Col md={8} sm={24}>
+          {
+            fieldConfig.map(item=>FormBuild(item,getFieldDecorator,true))
+          }
+          <Col md={6} sm={24}>
             <span className={styles.submitButtons}>
               <Button type="primary" htmlType="submit">
                 查询
@@ -187,174 +144,67 @@ class CurrencyTable extends PureComponent {
     );
   }
 
-  renderAdvancedForm(fields) {
-    return (
-      <Form onSubmit={this.handleSearch} layout="inline">
-        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-          {this.getFormCol(fields,"advanced")}
-          {/* <Col md={8} sm={24}>
-            <FormItem label="规则名称">
-              {getFieldDecorator('name')(<Input placeholder="请输入" />)}
-            </FormItem>
-          </Col>
-          <Col md={8} sm={24}>
-            <FormItem label="使用状态">
-              {getFieldDecorator('status')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="0">关闭</Option>
-                  <Option value="1">运行中</Option>
-                </Select>
-              )}
-            </FormItem>
-          </Col>
-          <Col md={8} sm={24}>
-            <FormItem label="调用次数">
-              {getFieldDecorator('number')(<InputNumber style={{ width: '100%' }} />)}
-            </FormItem>
-          </Col>
-        </Row>
-        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-          <Col md={8} sm={24}>
-            <FormItem label="更新日期">
-              {getFieldDecorator('date')(
-                <DatePicker style={{ width: '100%' }} placeholder="请输入更新日期" />
-              )}
-            </FormItem>
-          </Col>
-          <Col md={8} sm={24}>
-            <FormItem label="使用状态">
-              {getFieldDecorator('status3')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="0">关闭</Option>
-                  <Option value="1">运行中</Option>
-                </Select>
-              )}
-            </FormItem>
-          </Col>
-          <Col md={8} sm={24}>
-            <FormItem label="使用状态">
-              {getFieldDecorator('status4')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="0">关闭</Option>
-                  <Option value="1">运行中</Option>
-                </Select>
-              )}
-            </FormItem>
-          </Col> */}
-        </Row>
-        <div style={{ overflow: 'hidden' }}>
-          <div style={{ float: 'right', marginBottom: 24 }}>
-            <Button type="primary" htmlType="submit">
-              查询
-            </Button>
-            <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>
-              重置
-            </Button>
-            <a style={{ marginLeft: 8 }} onClick={this.toggleForm}>
-              收起 <Icon type="up" />
-            </a>
-          </div>
-        </div>
-      </Form>
-    );
+  openForm = (modal) => {
+    this.setState({modal:modal})
   }
 
-  renderForm(fields) {
-    const { expandForm } = this.state;
-    return expandForm ? this.renderAdvancedForm(fields) : this.renderSimpleForm(fields);
+  closeForm = () => {
+    this.setState({modal:{visible:false,content:''}})
   }
 
-  handleViewVisible = (flag) => {
-    this.setState({
-      viewVisible: !!flag,
-    });
-  };
+  // 页面渲染
+  render(){
+    const { loading,config,data,tbCode } = this.props;
+    const { selectedRowKeys,pagination,modal } = this.state;
 
-  handleMenuClick = e => {
-    switch (e.key) {
-      case 'create':
-        this.handleViewVisible(true)
-        break;
-      default:
-        break;
-    }
-  };
-
-  render() {
-    const {
-      route: { name },
-      loading,
-      getInfomation,
-      handleAdd,
-      handleDelete,
-      intelligenceTable,
-    } = this.props;
-    const { data } = intelligenceTable;
-    if(!data) return(<div></div>)
-
-    const { columns,btnConfig,info,title } = data;
-    const { selectedRows, viewVisible } = this.state;
-    if(!columns||!btnConfig) return(<div></div>)
-
-    const updateMethods = {
-      handleUpdateModalVisible: this.handleUpdateModalVisible,
-      handleUpdate: this.handleUpdate,
-    };
-    const menu = (
-      <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
-        <Menu.Item key="create">创建视图</Menu.Item>
-      </Menu>
-    );
-    const viewMethods = {
-      viewVisible: viewVisible,
-      handleViewVisible: this.handleViewVisible,
-      columns:columns,
+    const tableMethod = {
+      loadPageSplit:this.loadPageSplit,
+      loadData:this.loadData,
     }
 
-    const buttonMethods = {
-      columns:columns,
-      btnConfig:btnConfig,
-      selectedRows:selectedRows,
-      getInfomation:getInfomation,
-      handleAdd:handleAdd,
-      handleDelete:handleDelete,
-      info:info,
-      cleanSelectRows:this.cleanSelectRows,
+    const rowSelection = {
+      selectedRowKeys,
+      onChange: this.onSelectChange,
     };
+
+    const page={
+      ...pagination,
+      ...data.pagination,
+    }
+
+    const columns =(config.columnConfig || []).map(item=>item);
+
+    const currencyButton = {
+      openForm:this.openForm,
+      closeForm:this.closeForm,
+      btnConfig:config.btnConfig,
+      selectedRowKeys:selectedRowKeys,
+      tbCode:tbCode,
+    }
 
     return (
-      <PageHeaderWrapper title={title}>
+      <PageHeaderWrapper title="菜单配置">
         <Card bordered={false}>
           <div className={styles.tableList}>
-            <div className={styles.tableListForm}>{this.renderForm(columns)}</div>
-            <CurrencyModal {...buttonMethods} />
-            <div>
-              <div>
-                {/* <Dropdown overlay={menu} className={styles.dropdown}>
-                  <Button>
-                    视图 <Icon type="down" />
-                  </Button>
-                </Dropdown> */}
-                <StandardTable
-                  selectedRows={selectedRows}
-                  loading={loading}
-                  data={data}
-                  columns={columns}
-                  onSelectRow={this.handleSelectRows}
-                  onChange={this.handleStandardTableChange}
-                />
-              </div>
-            </div>
+            <div className={styles.tableListForm}>{this.renderSimpleForm(config.searchConfig)}</div>
+            <CurrencyButton {...currencyButton}/>
+            <Table
+              loading={loading}
+              dataSource={data.list}
+              columns={columns}
+              pagination={page}
+              rowSelection={rowSelection}
+              size='middle'
+              onChange={this.handleTableChange}
+            />
           </div>
         </Card>
-        {viewVisible ? (
-          <ViewEditor
-          {...viewMethods}
-          />
-        ):null}
+        {
+          modal.visible &&(
+            modal.content
+          )
+        }
       </PageHeaderWrapper>
     );
   }
 }
-
-export default CurrencyTable;

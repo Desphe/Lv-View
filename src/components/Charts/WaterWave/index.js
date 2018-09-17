@@ -6,6 +6,7 @@ import styles from './index.less';
 /* eslint no-mixed-operators: 0 */
 // riddle: https://riddle.alibaba-inc.com/riddles/2d9a4b90
 
+export default
 @autoHeight()
 class WaterWave extends PureComponent {
   state = {
@@ -22,13 +23,6 @@ class WaterWave extends PureComponent {
       },
       { passive: true }
     );
-  }
-
-  componentDidUpdate(props) {
-    const { percent } = this.props;
-    if (props.percent !== percent) {
-      this.renderChart();
-    }
   }
 
   componentWillUnmount() {
@@ -209,5 +203,3 @@ class WaterWave extends PureComponent {
     );
   }
 }
-
-export default WaterWave;

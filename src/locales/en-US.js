@@ -1,5 +1,9 @@
 export default {
   'navbar.lang': '中文',
+  'menu.build': 'Auto Build',
+  'menu.build.listBuild': 'List Build',
+  'menu.build.listConfig': 'List Config',
+  'menu.build.formConfig': 'Form Config',
   'menu.home': 'Home',
   'menu.dashboard': 'Dashboard',
   'menu.dashboard.analysis': 'Analysis',

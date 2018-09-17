@@ -9,7 +9,6 @@ export default
 class SearchList extends Component {
   handleTabChange = key => {
     const { match } = this.props;
-    console.log(match)
     switch (key) {
       case 'articles':
         router.push(`${match.url}/articles`);
