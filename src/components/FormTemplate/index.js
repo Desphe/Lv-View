@@ -5,16 +5,16 @@ import {
   Row,
   Modal,
   Table,
+  Tabs,
 } from 'antd';
 import FormBuild from '@/components/FormBuild';
+import CurrencyTable from '@/components/CurrencyTable';
 import styles from './index.less'
+
+const { TabPane } = Tabs;
 
 /* eslint react/no-multi-comp:0 */
 export default
-@connect(({ menuManage,loading }) => ({
-  menuManage,
-  loading:loading.models.menuManage,
-}))
 @Form.create()
 class FormTemplate extends PureComponent{
 
@@ -22,63 +22,71 @@ class FormTemplate extends PureComponent{
 
   }
 
-  componentDidMount(){
-    const {bCode, dKey,dispatch } = this.props;
-    dispatch({
-      type:'menuManage/loadInitFields',
-      payload:dKey?{bCode,key:dKey}:{bCode},
-    });
+  componentWillMount(){
+    const {loadFields,arrKey,btnConfig} = this.props;
+    let params = {}
+;    if(btnConfig.modalCode) {
+      params = {
+        id:arrKey,
+      }
+    }
+    loadFields(params,btnConfig.modalCode)
   }
 
   handleSubmit = e =>{
-    const { form:{getFieldsValue} } = this.props;
-    console.log(getFieldsValue())
-    // const { menuManage:{dataInfo:{fields}},handleSave,dispatch,form,dKey } = this.props;
-    // e.preventDefault();
-    // handleSave();
-    // form.validateFieldsAndScroll((err, values) => {
-    //   if (!err) {
-    //     const payload = {};
-    //     payload.key = dKey;
-    //     Object.keys(values).forEach(key=>{
-    //       let type ;
-    //       let temp={};
-    //       for (let i=0;i<config.length;i+=1){
-    //         if (config[i].field===key){
-    //           ({type} = config[i].type);
-    //           temp = config[i];
-    //           break;
-    //         }
-    //       }
-    //       if (type==='date') {
-    //         payload[key] = values[key].format(temp.format);
-    //       }
-    //       else if (type==='autocomplete') {
-    //         payload[key] = values[key].key;
-    //       }else{
-    //         payload[key] = values[key];
-    //       }
-    //     });
-
-    //     dispatch({
-    //       type:'menuManage/update',
-    //       payload
-    //     })
-    //   }
-    // });
+    const { form:{getFieldsValue},buttonFun,arrKey,btnConfig,onCancel } = this.props;
+    let params = getFieldsValue();
+    if(arrKey) {
+      if(arrKey.constructor==Array) {
+        params["ids"] = arrKey;
+      }else if(arrKey.constructor==Number) {
+        params["id"] = arrKey;
+      }
+    }
+    buttonFun(params,btnConfig.funCode)
+    onCancel()
   }
 
   onPanelChange=(value, mode)=>{
     console.info(value,mode);
   }
 
-  render(){
-    const {menuManage:{dataInfo:{fields,value}},visible,modalWidth,onCancel} = this.props;
-    const { form:{getFieldDecorator} } = this.props;
+  ModalContent() {
+    const {dataInfo,form:{getFieldDecorator}} = this.props;
+    console.log(dataInfo)
+    //const {fields,value} = dataInfo;
+    let modalContent;
+    if(dataInfo.constructor == Array) {
+      modalContent = <Tabs defaultActiveKey="0">
+        {dataInfo.map((data,i) => {
+          return(<TabPane tab={data.tabName} key={i}>
+              <Row justify="space-around" type="flex">
+                {
+                  data.fields.map(item=>FormBuild(item,getFieldDecorator,false,data.value))
+                }
+              </Row>
+          </TabPane>)
+        })}
+      </Tabs>
+    }else{
+      modalContent = <Form>
+        <Row justify="space-around" type="flex">
+          {
+            dataInfo.fields.map(item=>FormBuild(item,getFieldDecorator,false,dataInfo.value))
+          }
+        </Row>
+      </Form>;
+    }
+    return modalContent;
+    console.log()
+    return modalContent;
+  }
 
-    return(
+  render(){
+    const {visible,modalWidth,onCancel,btnConfig} = this.props;
+    return (
       <Modal
-        title={value?'新增':'编辑'}
+        title={btnConfig.btnName}
         width={modalWidth}
         visible={visible}
         onOk={this.handleSubmit}
@@ -88,16 +96,7 @@ class FormTemplate extends PureComponent{
         destroyOnClose
         className={styles.CustomFormClass}
       >
-        <Form>
-          <Row justify="space-around" type="flex">
-            {
-              fields.map(item=>FormBuild(item,getFieldDecorator,false,value))
-            }
-          </Row>
-          {/* <Row>
-            <Table dataSource={[]} columns={[{key:'1',title:'1111'}]} />
-          </Row> */}
-        </Form>
+        {this.ModalContent()}
       </Modal>
     )
   }

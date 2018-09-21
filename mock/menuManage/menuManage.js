@@ -3,55 +3,51 @@ import { parse } from 'url';
 // mock tableListDataSource
 let tableListDataSource = [];
 tableListDataSource = {
-  "result":{
-    "config":{
-      "columnConfig":[
-        {"key":"key","title":"编号","dataIndex":"key"},
-        {
-          "key":"name","title":"标题","dataIndex":"name","sorter":true,
-          "filters":[
-            {"text":"燕俊丞","value":"yanjc"},
-            {"text":"肖枫","value":"risfeng"},
-          ]
-        },
-        {"key":"ResCode","title":"资源索引","dataIndex":"ResCode","sorter":true},
-        {"key":"type","title":"类型","dataIndex":"type"},
+  code:200,
+  result:[{
+    config:{
+      columnConfig:[
+        {key:"key",title:"编号",dataIndex:"key"},
+        {key:"title",title:"菜单名称",dataIndex:"title",sorter:true},
+        {key:"code",title:"菜单编码",dataIndex:"code",sorter:true},
+        {key:"type",title:"菜单类型",dataIndex:"type"},
+        {key:"ResCode",title:"资源索引",dataIndex:"ResCode",sorter:true},
       ],
-      "searchConfig":[
-        {"type":"text","label":"编号","field":"key","required":false,"errorMessage":"","row":"half","disabled":false},
-        {"type":"text","label":"标题","field":"name","required":true,"errorMessage":"不能为空","row":"half","disabled":false},
-        {"type":"int","label":"资源索引","field":"ResCode","required":true,"errorMessage":"不能为空","row":"half","disabled":false},
+      searchConfig:[
+        {type:"text",label:"编号",field:"key",required:false,errorMessage:"",row:"half",disabled:false},
+        {type:"text",label:"菜单名称",field:"title",required:true,errorMessage:"不能为空",row:"half",disabled:false},
+        {type:"text",label:"资源索引",field:"ResCode",required:true,errorMessage:"不能为空",row:"half",disabled:false},
       ],
-      "btnConfig":[
-        {"btnName":"新增","type":"primary","funCode":"add","icon":"diff","showType":0},
-        {"btnName":"编辑","type":"primary","funCode":"edit","icon":"edit","showType":0},
-        {"btnName":"删除","funCode":"delete","showType":1}
+      btnConfig:[
+        {btnName:"新增",type:"primary",funCode:"add",icon:"diff",showType:0,modalCode:"get",isModal:true,isNeedSelect:false},
+        {btnName:"编辑",type:"primary",funCode:"edit",icon:"edit",showType:0,modalCode:"get",isModal:true,isNeedSelect:true},
+        {btnName:"删除",funCode:"delete",icon:"delete",showType:0,modalCode:"get",isModal:false,isNeedSelect:true},
       ]
     },
-    "data":{
-      "list":[
-        {"key":"1","name":"_yanjc_1","ResCode":11,"type":"类型1号",
-        "children": [
-          {"key": 11,"name": '_yanjc_11',"ResCode": 42,"type": '类型11号',}, 
-          {"key": 12,"name": '_yanjc_12',"ResCode": 30,"type": '类型12号',
-          "children": [
-            {"key": 121,"name": '_yanjc_121',"ResCode": 16,"type": '类型121号',}
+    data:{
+      list:[
+        {key:"1",title:"菜单名称_1",code:"1",ResCode:11,type:"类型1号",
+        children: [
+          {key: 11,title: '菜单名称_11',code:"1",ResCode: 42,type: '类型11号',}, 
+          {key: 12,title: '菜单名称_12',code:"1",ResCode: 30,type: '类型12号',
+          children: [
+            {key: 121,title: '菜单名称_121',code:"1",ResCode: 16,type: '类型121号',}
           ]},
         ]},
-        {"key":"2","name":"_yanjc_2","ResCode":12,"type":"类型2号"},
-        {"key":"3","name":"_yanjc_3","ResCode":13,"type":"类型3号"},
-        {"key":"4","name":"_yanjc_4","ResCode":14,"type":"类型4号"},
-        {"key":"5","name":"_yanjc_5","ResCode":15,"type":"类型5号"},
-        {"key":"6","name":"_yanjc_6","ResCode":16,"type":"类型6号"},
-        {"key":"7","name":"_yanjc_7","ResCode":17,"type":"类型7号"},
-        {"key":"8","name":"_yanjc_8","ResCode":18,"type":"类型8号"},
-        {"key":"9","name":"_yanjc_9","ResCode":19,"type":"类型9号"},
-        {"key":"10","name":"_yanjc_10","ResCode":20,"type":"类型10号"}
+        {key:"2",title:"菜单名称_2",code:"1",ResCode:12,type:"类型2号"},
+        {key:"3",title:"菜单名称_3",code:"1",ResCode:13,type:"类型3号"},
+        {key:"4",title:"菜单名称_4",code:"1",ResCode:14,type:"类型4号"},
+        {key:"5",title:"菜单名称_5",code:"1",ResCode:15,type:"类型5号"},
+        {key:"6",title:"菜单名称_6",code:"1",ResCode:16,type:"类型6号"},
+        {key:"7",title:"菜单名称_7",code:"1",ResCode:17,type:"类型7号"},
+        {key:"8",title:"菜单名称_8",code:"1",ResCode:18,type:"类型8号"},
+        {key:"9",title:"菜单名称_9",code:"1",ResCode:19,type:"类型9号"},
+        {key:"10",title:"菜单名称_10",code:"1",ResCode:20,type:"类型10号"}
       ],
-      "pagination":{"size":"small","total":350,"pageSize":10,"current":1},
-    }
-  },
-  "code":200
+      pagination:{size:"small",total:350,pageSize:10,current:1},
+    },
+    title:"菜单配置",
+  }],
 };
 
 let fieldSList = {};
@@ -304,7 +300,7 @@ function postRule(req, res, u, b) {
 }
 
 export default {
-  'GET /menuManage/menuManage': getRule,
-  'GET /menuManage/menuManage/get': getFieldsAdd,
-  'POST /menuManage/menuManage': postRule,
+  'GET /system/menuManage/list': getRule,
+  'GET /system/menuManage/get': getFieldsAdd,
+  'POST /system/menuManage': postRule,
 };

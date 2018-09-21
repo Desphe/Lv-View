@@ -9,6 +9,7 @@ import {
   InputNumber,
   Radio,
   TreeSelect,
+  Switch,
   // AutoComplete,
   Cascader,
 } from 'antd';
@@ -283,6 +284,13 @@ export default function FormBuild(config,getFieldDecorator,isSearchForm,data) {
       return (
         BuildItem(config,getFieldDecorator,formItemLayout,(
           <Cascader options={(config.options||[])} placeholder={config.errorMessage} />
+        ),newdata)
+      )
+    }
+    case 'switch':{ // 级联选择
+      return (
+        BuildItem(config,getFieldDecorator,formItemLayout,(
+          <Switch placeholder={config.errorMessage} disabled={config.disabled} />
         ),newdata)
       )
     }

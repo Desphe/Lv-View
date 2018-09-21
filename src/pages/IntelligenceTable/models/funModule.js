@@ -54,7 +54,7 @@ function getField(data) {
 }
 
 export default {
-  namespace: 'menuManage',
+  namespace: 'funModule',
 
   state: {
     table:{

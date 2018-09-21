@@ -5,11 +5,11 @@ import CurrencyTable from '@/components/CurrencyTable';
 // import notices from '../../../mock/notices';
 
 export default
-@connect(({ menuManage, loading }) => ({
-  menuManage,
-  loading: loading.models.menuManage,
+@connect(({ funModule, loading }) => ({
+  funModule,
+  loading: loading.models.funModule,
 }))
-class MenuManage extends PureComponent{
+class FunModule extends PureComponent{
   constructor(props){
     super();
     const { match:{params:{tbCode}} } = props;
@@ -42,7 +42,7 @@ class MenuManage extends PureComponent{
     const { dispatch } = this.props;
     const { tbCode } = this.state;
     dispatch({
-      type:'menuManage/loadSplitData',
+      type:'funModule/loadSplitData',
       path:'LoadSplitData',
       payload:params
     });
@@ -52,7 +52,7 @@ class MenuManage extends PureComponent{
   loadFields = (params,modalCode) => {
     const {tbCode,dispatch,match:{path}} = this.props;
     dispatch({
-      type:'menuManage/loadInitFields',
+      type:'funModule/loadInitFields',
       payload:params,
       path:`${modalCode}`,
     });
@@ -70,7 +70,7 @@ class MenuManage extends PureComponent{
     const {tbCode,dispatch,match:{path}} = this.props;
     const { searchParams } = this.state;
     dispatch({
-      type:'menuManage/buttonFun',
+      type:'funModule/buttonFun',
       payload:params,
       path:`${funCode}`,
       callBackPayload:searchParams,
@@ -91,7 +91,7 @@ class MenuManage extends PureComponent{
 
   // 页面渲染
   render(){
-    const { loading,menuManage } = this.props;
+    const { loading,funModule } = this.props;
     const { searchParams,selectedRowKeys } = this.state;
 
     const tableMethod = {
@@ -100,7 +100,7 @@ class MenuManage extends PureComponent{
       buttonFun:this.buttonFun,
       loading:loading,
       tbCode:this.state.tbCode,
-      ...menuManage,
+      ...funModule,
       searchParams:searchParams,
       onSelectChange:this.onSelectChange,
       selectedRowKeys:selectedRowKeys,

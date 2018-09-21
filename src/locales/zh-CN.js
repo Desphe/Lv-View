@@ -1,12 +1,54 @@
 // import zhMessages from '../../locales/zh.json';
 
 export default {
+  // =====================按钮=====================
+  'button.add':'新建',
+  'button.edit':'编辑',
+  'button.delete':'删除',
+  'button.search':'查询',
+  'button.reset':'重置',
+  'button.reset_pwd':'密码重置',
+  'button.enable':'启用',
+  'button.disable':'禁用',
+  'button.select_all':'全选',
+  'button.please_select':'请选择',
+  'button.please_input':'请输入',
+  'button.more':'更多',
+  // =====================按钮=====================
+
+  // =====================常规=====================
+  'comm.state': '状态',
+  'comm.unmber': '编号',
+  'comm.create_time': '创建时间',
+  'comm.create_user': '创建人',
+  'comm.options': '操作',
+  'comm.email': '邮箱',
+  'comm.sort': '排序',
+  'comm.mobile': '手机号码',
+  'comm.no_empty': '{0}不能为空',
+  'comm.please_input': '请输入{0}',
+  // =====================常规=====================
+
+  // =====================业务=====================
+  'app.user.id': '用户名',
+  'app.user.userinfo': '用户信息',
+  'app.user.user_name': '用户名',
+  'app.user.account': '账号',
+  'menu.system.userManage':'用户管理',
+  // =====================业务=====================
+
+
+
+
+
+
   'navbar.lang': 'English',
   'menu.system':'系统管理',
   'menu.system.menuManage':'菜单配置',
   'menu.system.user':'用户管理',
   'menu.system.role':'角色管理',
   'menu.system.funmodule':'功能模块配置',
+  'menu.system.language':'语言管理',
   
   'menu.build': '自动构建',
   'menu.build.listBuild': '列表生成',

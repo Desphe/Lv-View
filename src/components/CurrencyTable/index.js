@@ -6,16 +6,15 @@ import { Row,
   Form,
   Icon,
   Button,
-  Dropdown,
-  Menu,
   Table,
-  notification,
-  Divider } from 'antd';
+} from 'antd';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import styles from './index.less';
 import FormBuild from '@/components/FormBuild';
 import CurrencyButton from '@/components/CurrencyButton';
+import FormTemplate from '@/components/FormTemplate';
+import EditableTable from './EditTable.js';
 // import notices from '../../../mock/notices';
 
 export default
@@ -29,30 +28,16 @@ class CurrencyTable extends PureComponent{
     const { tbCode } = props;
     this.state = {
       tbCode,
-      selectedRowKeys: [],
       pagination:{
         showSizeChanger:true,
       },
       modal:{
         visible:false,
-        content:(<div>&nbsp;</div>),
+        arrKey:"",
+        btnConfig:"",
       },
+      expandForm: false,
     };
-  }
-
-  // 列表数据
-  loadPageSplit = (filter,page,sort)=> {
-    const { loadPageSplit } = this.props;
-    const { tbCode } = this.state;
-    let params = {
-      tbCode,
-      filter:{...filter},
-      sortField:sort.sortField || null,
-      sortOrder:sort.sortOrder || null,
-      pageIndex:page.current,
-      pageSize:page.pageSize,
-    }
-    loadPageSplit(params)
   }
 
   // componentWillReceiveProps(nextProp){
@@ -70,49 +55,58 @@ class CurrencyTable extends PureComponent{
     this.handleTopBtnClick({funCode:obj.key,key:'',source:'btn'});
   }
 
-  // 表格checkbox选择事件
-  onSelectChange = (selectedRowKeys) => {
-    this.setState({ selectedRowKeys });
+  handleThChange(sorter) {
+    const { searchParams } = this.props;
+    let params = searchParams;
+    params["sortField"] = sorter.columnKey;
+    params["sortOrder"] = sorter.order.substring(0,sorter.order.indexOf("end"));
+    return params;
+  }
+
+  handlePageChange(paginationarg) {
+    const { searchParams } = this.props;
+    let params = searchParams;
+    params["pageIndex"] = paginationarg.current;
+    params["pageSize"] = paginationarg.pageSize;
+    return params;
   }
 
   // 分页
   handleTableChange = (paginationarg, filters, sorter) => {
-    const { form } = this.props;
-    // const { pagination } = this.state;
-
+    const { form,loadPageSplit } = this.props;
     form.validateFields((err, fieldsValue) =>{
       if (err) return;
-
-      const arrFv = {};
-      Object.keys(fieldsValue).forEach(key=>{
-        if (fieldsValue[key]!==null && fieldsValue[key]!=='') {
-          arrFv[key] = fieldsValue[key];
-        }
-      });
-
-      this.setState({
-        pagination:paginationarg
-      },()=>this.loadPageSplit({...filters,...arrFv},paginationarg,{sortField:sorter.field,sortOrder:sorter.order}));
+      let params = {};
+      if(Object.keys(sorter).length != 0) {
+        params = this.handleThChange(sorter);
+      }else{
+        params = this.handlePageChange(paginationarg)
+      }
+      loadPageSplit(params)
     });
   }
 
   // 查询按钮
   handleSearch = e => {
     e.preventDefault();
-    const { form } = this.props;
-    const { pagination } = this.state;
+    const { form,loadPageSplit } = this.props;
+    const { searchParams } = this.props;
+    const { getFieldsValue } = form;
+    let params = searchParams;
+    for(var key in getFieldsValue()) {
+      if(getFieldsValue()[key]) {
+        params[key] = getFieldsValue()[key];
+      }
+    }
+    params["pageIndex"] = 1;
 
-    form.validateFields((err, fieldsValue) => {
-      if (err) return;
+    loadPageSplit(params)
+  };
 
-      const arrFv = {};
-      Object.keys(fieldsValue).forEach(key=>{
-        if (fieldsValue[key]!==null && fieldsValue[key]!=='') {
-          arrFv[key] = fieldsValue[key];
-        }
-      });
-
-      this.loadPageSplit({...arrFv},{current:1,pageSize:pagination.pageSize},{});
+  toggleForm = () => {
+    const { expandForm } = this.state;
+    this.setState({
+      expandForm: !expandForm,
     });
   };
 
@@ -124,7 +118,11 @@ class CurrencyTable extends PureComponent{
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           {
-            fieldConfig.map(item=>FormBuild(item,getFieldDecorator,true))
+            fieldConfig.map((item,i)=>{
+              if(i<3) {
+                return FormBuild(item,getFieldDecorator,true)
+              }
+            })
           }
           <Col md={6} sm={24}>
             <span className={styles.submitButtons}>
@@ -144,66 +142,97 @@ class CurrencyTable extends PureComponent{
     );
   }
 
-  openForm = (modal) => {
+  renderAdvancedForm(fieldConfig) {
+    const { form } = this.props;
+    const { getFieldDecorator } = form;
+    return (
+      <Form onSubmit={this.handleSearch} layout="inline">
+        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+          {
+            fieldConfig.map(item=>FormBuild(item,getFieldDecorator,true))
+          }
+          <Col md={6} sm={24}>
+            <span className={styles.submitButtons}>
+              <Button type="primary" htmlType="submit">
+                查询
+              </Button>
+              <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>
+                重置
+              </Button>
+              <a style={{ marginLeft: 8 }} onClick={this.toggleForm}>
+                收起 <Icon type="up" />
+              </a>
+            </span>
+          </Col>
+        </Row>
+      </Form>
+    );
+  }
+
+  renderForm(fieldConfig) {
+    const { expandForm } = this.state;
+    return expandForm ? this.renderAdvancedForm(fieldConfig) : this.renderSimpleForm(fieldConfig);
+  }
+
+  openForm = (obj,arrKey) => {
+    let modal = {
+      visible:true,
+      arrKey:arrKey,
+      btnConfig:obj,
+    };
     this.setState({modal:modal})
   }
 
   closeForm = () => {
-    this.setState({modal:{visible:false,content:''}})
+    this.setState({modal:{visible:false,arrKey:"",btnConfig:""}})
   }
 
   // 页面渲染
   render(){
-    const { loading,config,data,tbCode } = this.props;
-    const { selectedRowKeys,pagination,modal } = this.state;
-
-    const tableMethod = {
-      loadPageSplit:this.loadPageSplit,
-      loadData:this.loadData,
-    }
-
+    const { table,loadFields,dataInfo,buttonFun,loading,tbCode,selectedRowKeys,onSelectChange } = this.props;
+    const { config,list,title } = table;
+    const { modal,pagination } = this.state;
     const rowSelection = {
       selectedRowKeys,
-      onChange: this.onSelectChange,
+      onChange: onSelectChange,
     };
-
     const page={
       ...pagination,
-      ...data.pagination,
+      ...list.pagination,
     }
-
-    const columns =(config.columnConfig || []).map(item=>item);
-
+    const tableMethod = {
+      loading:loading,
+      dataSource:list.data,
+      columns:config.columnConfig,
+      pagination:list.pagination?page:false,
+      rowSelection:rowSelection,
+      size:'middle',
+      onChange:this.handleTableChange,
+    };
     const currencyButton = {
       openForm:this.openForm,
       closeForm:this.closeForm,
       btnConfig:config.btnConfig,
       selectedRowKeys:selectedRowKeys,
       tbCode:tbCode,
+      buttonFun:buttonFun,
     }
-
+    let formMethod = {
+      loadFields,
+      ...modal,
+      dataInfo,
+      buttonFun,
+    }
     return (
-      <PageHeaderWrapper title="菜单配置">
+      <PageHeaderWrapper title={title}>
         <Card bordered={false}>
           <div className={styles.tableList}>
-            <div className={styles.tableListForm}>{this.renderSimpleForm(config.searchConfig)}</div>
-            <CurrencyButton {...currencyButton}/>
-            <Table
-              loading={loading}
-              dataSource={data.list}
-              columns={columns}
-              pagination={page}
-              rowSelection={rowSelection}
-              size='middle'
-              onChange={this.handleTableChange}
-            />
+            <div className={styles.tableListForm}>{config.searchConfig?this.renderForm(config.searchConfig):""}</div>
+            {config.btnConfig?<CurrencyButton {...currencyButton}/>:""}
+              <Table {...tableMethod} rowKey="id"/>
           </div>
         </Card>
-        {
-          modal.visible &&(
-            modal.content
-          )
-        }
+        {modal.visible && modal.btnConfig && <FormTemplate visible modalWidth='60%' {...formMethod} formName="company" onCancel={()=>{this.closeForm()} } />}
       </PageHeaderWrapper>
     );
   }

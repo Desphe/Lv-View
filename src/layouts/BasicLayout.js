@@ -93,6 +93,9 @@ class BasicLayout extends React.PureComponent {
     dispatch({
       type: 'setting/getSetting',
     });
+    dispatch({
+      type: 'sliderMenus/fetch',
+    });
     this.renderRef = requestAnimationFrame(() => {
       this.setState({
         rendering: false,
@@ -133,6 +136,7 @@ class BasicLayout extends React.PureComponent {
   }
 
   getRemoteMenuData(){
+    const {sliderMenus:{data:{sliderMenus}}} = this.props;
     const arr = [];// this.getMenuData();
     arr.push({
       name:'app.analysis.search-users',
@@ -164,6 +168,12 @@ class BasicLayout extends React.PureComponent {
           icon:"dashboard",
           locale:"menu.system.funmodule",
         },
+        {
+          name:'menu.system.language',
+          path:'/system/language',
+          icon:"dashboard",
+          locale:"menu.system.language",
+        },
       ]
     });
     arr.push({
@@ -174,7 +184,7 @@ class BasicLayout extends React.PureComponent {
       children:[
         {
           name:'menu.build.listConfig',
-          path:'/build/list_build/user',
+          path:'/build/list_build/1',
           icon:"dashboard",
           locale:"menu.build.listBuild",
         },
@@ -345,7 +355,8 @@ class BasicLayout extends React.PureComponent {
   }
 }
 
-export default connect(({ global, setting }) => ({
+export default connect(({ global, setting, sliderMenus }) => ({
+  sliderMenus,
   collapsed: global.collapsed,
   layout: setting.layout,
   ...setting,

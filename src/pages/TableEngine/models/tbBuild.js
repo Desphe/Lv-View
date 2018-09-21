@@ -16,25 +16,19 @@ export default {
         total:0,
         current:1,
         size:'small',
-        // pageSize:10,
       },
     },
   },
 
   effects: {
-    *fetch({ payload }, { call, put }) {
-      const response = yield call(loadInitData, payload);
-      yield put({
-        type: 'save',
-        payload: response,
-      });
-    },
     *loadConfigData({payload},{call,put}){
-      const response = yield call(loadInitData, payload);
-      if (response.code===200){
+      const resConfig = yield call(loadInitData, {bCode:payload.bCode});
+      const resData = yield call(loadSplitData, payload);
+      if (resConfig.code===200){
         yield put({
           type: 'build',
-          payload: response.result,
+          config: resConfig.result.config ||[],
+          data:resData.result || [],
         });
       }
     },
@@ -50,16 +44,11 @@ export default {
   },
 
   reducers: {
-    save(state, action) {
-      return {
-        ...state,
-        data: action.payload,
-      };
-    },
-    build(state,{payload}){
+    build(state,{config,data}){
       return{
         ...state,
-        ...payload
+        config,
+        data
       }
     },
     split(state,{payload}){

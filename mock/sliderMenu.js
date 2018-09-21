@@ -10,10 +10,10 @@ sliderMenus = [
     locale:"menu.system",
     children:[
       {
-        name:'menu.system.menu',
-        path:'/system/menu',
+        name:'menu.system.menuManage',
+        path:'/system/menuManage',
         icon:"dashboard",
-        locale:"menu.system.menu",
+        locale:"menu.system.menuManage",
       },
       {
         name:'menu.system.user',
@@ -33,6 +33,12 @@ sliderMenus = [
         icon:"dashboard",
         locale:"menu.system.funmodule",
       },
+      {
+        name:'menu.system.language',
+        path:'/system/language',
+        icon:"dashboard",
+        locale:"menu.system.language",
+      },
     ]
   },
   {
@@ -43,7 +49,7 @@ sliderMenus = [
     children:[
       {
         name:'menu.build.listConfig',
-        path:'/build/list_build/user',
+        path:'/build/list_build/1',
         icon:"dashboard",
         locale:"menu.build.listBuild",
       },

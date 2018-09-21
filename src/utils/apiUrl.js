@@ -1,4 +1,4 @@
-const host='http://111.231.145.121:8080/'
+const host='http://192.168.1.102:8080/'
 
 const apiUrl = {
   host,
@@ -12,6 +12,27 @@ const apiUrl = {
     deleteFormData:`${host}api/FormBuild/DeleteFormDataByIds`,
     updateFormData:`${host}api/FormBuild/UpdateFormData`,
   },
+  systemManage:{
+    loadUserSplitData:`${host}api/User/LoadSplitData`,
+    getUserRoleDetail:`${host}api/User/GetUserRoleDetail`,
+    getUserDetail:`${host}api/User/GetUserDetail`,
+    editUserData:`${host}api/User/EditUserData`,
+    changeUserState:`${host}api/User/ChangeUserState`,
+
+    loadRoleSplitData:`${host}api/Role/LoadSplitData`,
+    getRoleDetail:`${host}api/Role/GetDetail`,
+    editRoleDetail:`${host}api/Role/EditRoleDetail`,
+    deleteRoleByIds:`${host}api/Role/DeleteRoleByIds`,
+
+    getLanguageColumnsConfig:`${host}api/Language/GetColums`,
+    loadLanguageSplitData:`${host}api/Language/LoadSplitData`,
+    loadLanguageDetail:`${host}api/Language/LoadDetail`,
+    editLanguage:`${host}api/Language/EditLanguage`,
+    loadLanguageList:`${host}api/Language/GetLanguageList`,
+
+    loadMenuSplitData:`${host}api/Menu`,
+    loadModuleSplitData:`${host}api/Module`,
+  }
 }
 
 export default apiUrl;

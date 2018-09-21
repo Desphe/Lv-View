@@ -20,7 +20,7 @@ export default [
       { path: '/', redirect: '/dashboard/analysis' },
       {
         path: '/system',
-        name: 'build',
+        name: 'system',
         icon: 'dashboard',
         routes:[
           {
@@ -30,18 +30,23 @@ export default [
           },
           {
             path: '/system/user',
-            name: 'listBuild',
-            component: './TableEngine/TableTemplate',
-          },
-          {
-            path: '/system/role',
-            name: 'listBuild',
-            component: './TableEngine/TableTemplate',
-          },
+             name: 'user',
+             component: './System/UserManage',
+           },
+           {
+             path: '/system/role',
+             name: 'role',
+             component: './System/RoleManage',
+           },
           {
             path: '/system/funmodule',
-            name: 'listBuild',
-            component: './TableEngine/TableTemplate',
+            name: 'funmodule',
+            component: './System/funModule',
+          },
+          {
+            path: '/system/language',
+            name: 'language',
+            component: './System/LanguageManage',
           },
         ]
       },
@@ -51,9 +56,9 @@ export default [
         icon: 'dashboard',
         routes:[
           {
-            path: '/build/list_build/:tbCode',
+            path: '/build/list_build/:bCode',
             name: 'listBuild',
-            component: './TableEngine/TableTemplate',
+            component: './Business/Template',
           },
           {
             path: '/build/list_config',

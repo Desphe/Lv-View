@@ -1,0 +1,770 @@
+1、模块编辑：id为空为插入
+http://localhost:8080/api/Module/EditModuleDetail
+请求：
+{
+	"module": {
+		"tableId": 1,
+		"name": "测试用用",
+		"resIndex": "xszh",
+		"btnAdd": false,
+		"btnEdit": false,
+		"btnDelete": false,
+		"type": "list",
+		"sort": 0,
+		"remark": null,
+		"filter": null
+	},
+	"btns": [
+		{
+			"moduleId": 1,
+			"btnTypeId": 1,
+			"btnName": "新增",
+			"resIndex": "1",
+			"icon": "diff",
+			"isConfirm": false,
+			"isSave": false,
+			"toList": false,
+			"toAdd": false,
+			"toEdit": false,
+			"params": null,
+			"sort": 0
+		},
+		{
+			"moduleId": 1,
+			"btnTypeId": 2,
+			"btnName": "编辑",
+			"resIndex": "1",
+			"icon": "edit",
+			"isConfirm": false,
+			"isSave": false,
+			"toList": false,
+			"toAdd": false,
+			"toEdit": false,
+			"params": null,
+			"sort": 0
+		}
+	],
+	"fields": [
+		{
+			"moduleId": 1,
+			"fieldId": 1,
+			"fieldName": "主键",
+			"isShowList": true,
+			"isShowForm": false,
+			"isReadonly": false,
+			"isSearchForm": true,
+			"isRequired": false
+		},
+		{
+			"moduleId": 1,
+			"fieldId": 2,
+			"fieldName": "啊啊",
+			"isShowList": true,
+			"isShowForm": false,
+			"isReadonly": false,
+			"isSearchForm": true,
+			"isRequired": false
+		},
+		{
+			"moduleId": 1,
+			"fieldId": 3,
+			"fieldName": "尺寸",
+			"isShowList": true,
+			"isShowForm": false,
+			"isReadonly": false,
+			"isSearchForm": true,
+			"isRequired": false
+		},
+		{
+			"moduleId": 1,
+			"fieldId": 4,
+			"fieldName": "嗯嗯",
+			"isShowList": true,
+			"isShowForm": false,
+			"isReadonly": false,
+			"isSearchForm": true,
+			"isRequired": false
+		},
+		{
+			"moduleId": 1,
+			"fieldId": 5,
+			"fieldName": "方法",
+			"isShowList": true,
+			"isShowForm": false,
+			"isReadonly": false,
+			"isSearchForm": true,
+			"isRequired": false
+		}
+	]
+}
+响应：
+{
+    "code": 200,
+    "message": "Success",
+    "result": true
+}
+
+2、模块单条查询
+http://localhost:8080/api/Module/GetDetail
+请求：
+{
+	"id": 1
+}
+响应：
+{
+    "code": 200,
+    "message": "Success",
+    "result": {
+        "module": {
+            "id": 1,
+            "tableId": 1,
+            "name": "销售账户",
+            "resIndex": "xszh",
+            "btnAdd": false,
+            "btnEdit": false,
+            "btnDelete": false,
+            "type": "list",
+            "sort": 0,
+            "remark": null,
+            "filter": null
+        },
+        "btns": [
+            {
+                "id": 1,
+                "moduleId": 1,
+                "btnTypeId": 1,
+                "btnName": "新增",
+                "resIndex": "1",
+                "icon": "diff",
+                "isConfirm": false,
+                "isSave": false,
+                "toList": false,
+                "toAdd": false,
+                "toEdit": false,
+                "params": null,
+                "sort": 0,
+                "isNeedSelect": 0,
+                "isModal": false,
+                "modalCode": "get"
+            },
+            {
+                "id": 2,
+                "moduleId": 1,
+                "btnTypeId": 2,
+                "btnName": "编辑",
+                "resIndex": "1",
+                "icon": "edit",
+                "isConfirm": false,
+                "isSave": false,
+                "toList": false,
+                "toAdd": false,
+                "toEdit": false,
+                "params": null,
+                "sort": 0,
+                "isNeedSelect": 1,
+                "isModal": true,
+                "modalCode": "get"
+            }
+        ],
+        "fields": [
+            {
+                "id": 1,
+                "moduleId": 1,
+                "fieldId": 1,
+                "fieldName": "主键",
+                "isShowList": true,
+                "isShowForm": false,
+                "isReadonly": false,
+                "isSearchForm": true,
+                "isRequired": false
+            },
+            {
+                "id": 2,
+                "moduleId": 1,
+                "fieldId": 2,
+                "fieldName": "啊啊",
+                "isShowList": true,
+                "isShowForm": false,
+                "isReadonly": false,
+                "isSearchForm": true,
+                "isRequired": false
+            },
+            {
+                "id": 3,
+                "moduleId": 1,
+                "fieldId": 3,
+                "fieldName": "尺寸",
+                "isShowList": true,
+                "isShowForm": false,
+                "isReadonly": false,
+                "isSearchForm": true,
+                "isRequired": false
+            },
+            {
+                "id": 4,
+                "moduleId": 1,
+                "fieldId": 4,
+                "fieldName": "嗯嗯",
+                "isShowList": true,
+                "isShowForm": false,
+                "isReadonly": false,
+                "isSearchForm": true,
+                "isRequired": false
+            },
+            {
+                "id": 5,
+                "moduleId": 1,
+                "fieldId": 5,
+                "fieldName": "方法",
+                "isShowList": true,
+                "isShowForm": false,
+                "isReadonly": false,
+                "isSearchForm": true,
+                "isRequired": false
+            }
+        ],
+        "alltables": [
+            {
+                "id": 1,
+                "name": "lv_sales_account",
+                "title": "销售账户表",
+                "description": "rentt",
+                "type": 0,
+                "sort": 0
+            }
+        ],
+        "allbtns": [
+            {
+                "id": 1,
+                "btnTypeName": "新增",
+                "btnCode": "api/FormBuild/UpdateFormData"
+            },
+            {
+                "id": 2,
+                "btnTypeName": "编辑",
+                "btnCode": "api/FormBuild/UpdateFormData"
+            },
+            {
+                "id": 3,
+                "btnTypeName": "删除",
+                "btnCode": "api/FormBuild/DeleteFormDataByIds"
+            }
+        ],
+        "allfields": [
+            {
+                "id": 1,
+                "tableId": 1,
+                "name": "id",
+                "type": "",
+                "isNull": false,
+                "isPrimaryKey": true,
+                "defaultValue": "null",
+                "controlType": "",
+                "detail": "",
+                "showType": "half",
+                "resIndex": "id"
+            },
+            {
+                "id": 2,
+                "tableId": 1,
+                "name": "sale_no",
+                "type": "",
+                "isNull": true,
+                "isPrimaryKey": false,
+                "defaultValue": "null",
+                "controlType": "",
+                "detail": "",
+                "showType": "half",
+                "resIndex": "sale_no"
+            },
+            {
+                "id": 3,
+                "tableId": 1,
+                "name": "customer_account",
+                "type": "",
+                "isNull": true,
+                "isPrimaryKey": false,
+                "defaultValue": "null",
+                "controlType": "",
+                "detail": "",
+                "showType": "half",
+                "resIndex": "customer_account"
+            },
+            {
+                "id": 4,
+                "tableId": 1,
+                "name": "counter_code",
+                "type": "",
+                "isNull": true,
+                "isPrimaryKey": false,
+                "defaultValue": "null",
+                "controlType": "",
+                "detail": "",
+                "showType": "half",
+                "resIndex": "counter_code"
+            },
+            {
+                "id": 5,
+                "tableId": 1,
+                "name": "brand_code",
+                "type": "",
+                "isNull": true,
+                "isPrimaryKey": false,
+                "defaultValue": "null",
+                "controlType": "",
+                "detail": "",
+                "showType": "half",
+                "resIndex": "brand_code"
+            },
+            {
+                "id": 6,
+                "tableId": 1,
+                "name": "trade_date",
+                "type": "",
+                "isNull": true,
+                "isPrimaryKey": false,
+                "defaultValue": "null",
+                "controlType": "",
+                "detail": "",
+                "showType": "half",
+                "resIndex": "trade_date"
+            },
+            {
+                "id": 7,
+                "tableId": 1,
+                "name": "invoice_no",
+                "type": "",
+                "isNull": true,
+                "isPrimaryKey": false,
+                "defaultValue": "null",
+                "controlType": "",
+                "detail": "",
+                "showType": "half",
+                "resIndex": "invoice_no"
+            },
+            {
+                "id": 8,
+                "tableId": 1,
+                "name": "tax_free",
+                "type": "",
+                "isNull": true,
+                "isPrimaryKey": false,
+                "defaultValue": "null",
+                "controlType": "",
+                "detail": "",
+                "showType": "half",
+                "resIndex": "tax_free"
+            },
+            {
+                "id": 9,
+                "tableId": 1,
+                "name": "tax_rate",
+                "type": "",
+                "isNull": true,
+                "isPrimaryKey": false,
+                "defaultValue": "null",
+                "controlType": "",
+                "detail": "",
+                "showType": "half",
+                "resIndex": "tax_rate"
+            },
+            {
+                "id": 10,
+                "tableId": 1,
+                "name": "tax_amount",
+                "type": "",
+                "isNull": true,
+                "isPrimaryKey": false,
+                "defaultValue": "null",
+                "controlType": "",
+                "detail": "",
+                "showType": "half",
+                "resIndex": "tax_amount"
+            },
+            {
+                "id": 11,
+                "tableId": 1,
+                "name": "total",
+                "type": "",
+                "isNull": true,
+                "isPrimaryKey": false,
+                "defaultValue": "null",
+                "controlType": "",
+                "detail": "",
+                "showType": "half",
+                "resIndex": "total"
+            },
+            {
+                "id": 12,
+                "tableId": 1,
+                "name": "import_date",
+                "type": "",
+                "isNull": true,
+                "isPrimaryKey": false,
+                "defaultValue": "null",
+                "controlType": "",
+                "detail": "",
+                "showType": "half",
+                "resIndex": "import_date"
+            },
+            {
+                "id": 13,
+                "tableId": 1,
+                "name": "import_file_name",
+                "type": "",
+                "isNull": true,
+                "isPrimaryKey": false,
+                "defaultValue": "null",
+                "controlType": "",
+                "detail": "",
+                "showType": "half",
+                "resIndex": "import_file_name"
+            },
+            {
+                "id": 14,
+                "tableId": 1,
+                "name": "match_state",
+                "type": "",
+                "isNull": true,
+                "isPrimaryKey": false,
+                "defaultValue": "null",
+                "controlType": "",
+                "detail": "",
+                "showType": "half",
+                "resIndex": "match_state"
+            }
+        ]
+    }
+}
+3、模块删除
+http://localhost:8080/api/Module/DeleteModuleByIds
+请求：
+{
+  "ids": ["3"]
+}
+响应：
+{
+    "code": 200,
+    "message": "Success",
+    "result": true
+}
+
+4、模块查询：pageSize为0，查询全部
+http://localhost:8080/api/Module/LoadSplitData
+请求：
+{
+  "name": "",
+  "sortField": "id",
+  "sortOrder": "desc",
+  "pageIndex": 1,
+  "pageSize": 0
+}
+响应：
+{
+    "code": 200,
+    "message": "Success",
+    "result": {
+        "list": [
+            {
+                "id": 1,
+                "tableId": 1,
+                "name": "销售账户",
+                "resIndex": "xszh",
+                "btnAdd": false,
+                "btnEdit": false,
+                "btnDelete": false,
+                "type": "list",
+                "sort": 0,
+                "remark": null,
+                "filter": null
+            }
+        ],
+        "pagination": {
+            "size": null,
+            "total": 1,
+            "pageSize": null,
+            "current": null
+        }
+    }
+}
+
+4、按tableId查询列：pageSize为0，查询全部
+http://localhost:8080/api/Fields/LoadSplitData
+请求：
+{
+  "tableId": "1",
+  "sortField": "id",
+  "sortOrder": "desc",
+  "pageIndex": 1,
+  "pageSize": 0
+}
+响应：
+{
+    "code": 200,
+    "message": "Success",
+    "result": {
+        "list": [
+            {
+                "id": 14,
+                "tableId": 1,
+                "name": "match_state",
+                "type": "",
+                "isNull": true,
+                "isPrimaryKey": false,
+                "defaultValue": "null",
+                "controlType": "",
+                "detail": "",
+                "showType": "half",
+                "resIndex": "match_state"
+            },
+            {
+                "id": 13,
+                "tableId": 1,
+                "name": "import_file_name",
+                "type": "",
+                "isNull": true,
+                "isPrimaryKey": false,
+                "defaultValue": "null",
+                "controlType": "",
+                "detail": "",
+                "showType": "half",
+                "resIndex": "import_file_name"
+            },
+            {
+                "id": 12,
+                "tableId": 1,
+                "name": "import_date",
+                "type": "",
+                "isNull": true,
+                "isPrimaryKey": false,
+                "defaultValue": "null",
+                "controlType": "",
+                "detail": "",
+                "showType": "half",
+                "resIndex": "import_date"
+            },
+            {
+                "id": 11,
+                "tableId": 1,
+                "name": "total",
+                "type": "",
+                "isNull": true,
+                "isPrimaryKey": false,
+                "defaultValue": "null",
+                "controlType": "",
+                "detail": "",
+                "showType": "half",
+                "resIndex": "total"
+            },
+            {
+                "id": 10,
+                "tableId": 1,
+                "name": "tax_amount",
+                "type": "",
+                "isNull": true,
+                "isPrimaryKey": false,
+                "defaultValue": "null",
+                "controlType": "",
+                "detail": "",
+                "showType": "half",
+                "resIndex": "tax_amount"
+            },
+            {
+                "id": 9,
+                "tableId": 1,
+                "name": "tax_rate",
+                "type": "",
+                "isNull": true,
+                "isPrimaryKey": false,
+                "defaultValue": "null",
+                "controlType": "",
+                "detail": "",
+                "showType": "half",
+                "resIndex": "tax_rate"
+            },
+            {
+                "id": 8,
+                "tableId": 1,
+                "name": "tax_free",
+                "type": "",
+                "isNull": true,
+                "isPrimaryKey": false,
+                "defaultValue": "null",
+                "controlType": "",
+                "detail": "",
+                "showType": "half",
+                "resIndex": "tax_free"
+            },
+            {
+                "id": 7,
+                "tableId": 1,
+                "name": "invoice_no",
+                "type": "",
+                "isNull": true,
+                "isPrimaryKey": false,
+                "defaultValue": "null",
+                "controlType": "",
+                "detail": "",
+                "showType": "half",
+                "resIndex": "invoice_no"
+            },
+            {
+                "id": 6,
+                "tableId": 1,
+                "name": "trade_date",
+                "type": "",
+                "isNull": true,
+                "isPrimaryKey": false,
+                "defaultValue": "null",
+                "controlType": "",
+                "detail": "",
+                "showType": "half",
+                "resIndex": "trade_date"
+            },
+            {
+                "id": 5,
+                "tableId": 1,
+                "name": "brand_code",
+                "type": "",
+                "isNull": true,
+                "isPrimaryKey": false,
+                "defaultValue": "null",
+                "controlType": "",
+                "detail": "",
+                "showType": "half",
+                "resIndex": "brand_code"
+            },
+            {
+                "id": 4,
+                "tableId": 1,
+                "name": "counter_code",
+                "type": "",
+                "isNull": true,
+                "isPrimaryKey": false,
+                "defaultValue": "null",
+                "controlType": "",
+                "detail": "",
+                "showType": "half",
+                "resIndex": "counter_code"
+            },
+            {
+                "id": 3,
+                "tableId": 1,
+                "name": "customer_account",
+                "type": "",
+                "isNull": true,
+                "isPrimaryKey": false,
+                "defaultValue": "null",
+                "controlType": "",
+                "detail": "",
+                "showType": "half",
+                "resIndex": "customer_account"
+            },
+            {
+                "id": 2,
+                "tableId": 1,
+                "name": "sale_no",
+                "type": "",
+                "isNull": true,
+                "isPrimaryKey": false,
+                "defaultValue": "null",
+                "controlType": "",
+                "detail": "",
+                "showType": "half",
+                "resIndex": "sale_no"
+            },
+            {
+                "id": 1,
+                "tableId": 1,
+                "name": "id",
+                "type": "",
+                "isNull": false,
+                "isPrimaryKey": true,
+                "defaultValue": "null",
+                "controlType": "",
+                "detail": "",
+                "showType": "half",
+                "resIndex": "id"
+            }
+        ],
+        "pagination": {
+            "size": null,
+            "total": 14,
+            "pageSize": 0,
+            "current": 1
+        }
+    }
+}
+
+4、查询表：pageSize为0，查询全部
+http://localhost:8080/api/Tables/LoadSplitData
+请求：
+{
+  "sortField": "id",
+  "sortOrder": "desc",
+  "pageIndex": 1,
+  "pageSize": 0
+}
+响应：
+{
+    "code": 200,
+    "message": "Success",
+    "result": {
+        "list": [
+            {
+                "id": 1,
+                "name": "lv_sales_account",
+                "title": "销售账户表",
+                "description": "rentt",
+                "type": 0,
+                "sort": 0
+            }
+        ],
+        "pagination": {
+            "size": null,
+            "total": 1,
+            "pageSize": 0,
+            "current": 1
+        }
+    }
+}
+
+4、查询按钮：pageSize为0，查询全部
+http://localhost:8080/api/Buttons/LoadSplitData
+请求：
+{
+  "sortField": "id",
+  "sortOrder": "desc",
+  "pageIndex": 1,
+  "pageSize": 0
+}
+响应：
+{
+    "code": 200,
+    "message": "Success",
+    "result": {
+        "list": [
+            {
+                "id": 3,
+                "btnTypeName": "删除",
+                "btnCode": "api/FormBuild/DeleteFormDataByIds"
+            },
+            {
+                "id": 2,
+                "btnTypeName": "编辑",
+                "btnCode": "api/FormBuild/UpdateFormData"
+            },
+            {
+                "id": 1,
+                "btnTypeName": "新增",
+                "btnCode": "api/FormBuild/UpdateFormData"
+            }
+        ],
+        "pagination": {
+            "size": null,
+            "total": 3,
+            "pageSize": 0,
+            "current": 1
+        }
+    }
+}

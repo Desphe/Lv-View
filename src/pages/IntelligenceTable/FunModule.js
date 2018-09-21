@@ -5,11 +5,11 @@ import CurrencyTable from '@/components/CurrencyTable';
 // import notices from '../../../mock/notices';
 
 export default
-@connect(({ menuManage, loading }) => ({
-  menuManage,
-  loading: loading.models.menuManage,
+@connect(({ system, loading }) => ({
+  system,
+  loading: loading.models.system,
 }))
-class MenuManage extends PureComponent{
+class FunModule extends PureComponent{
   constructor(props){
     super();
     const { match:{params:{tbCode}} } = props;
@@ -28,34 +28,7 @@ class MenuManage extends PureComponent{
   // 加载数据
   componentDidMount(){
     // 获取列表业务code
-    let params = {
-      sortField: "id",
-      sortOrder: "desc",
-      pageIndex: 1,
-      pageSize: 10
-    }
-    this.loadPageSplit(params);
-  }
-
-  // 列表数据
-  loadPageSplit = (params)=> {
-    const { dispatch } = this.props;
-    const { tbCode } = this.state;
-    dispatch({
-      type:'menuManage/loadSplitData',
-      path:'LoadSplitData',
-      payload:params
-    });
-    this.setState({searchParams:params})
-  }
-
-  loadFields = (params,modalCode) => {
-    const {tbCode,dispatch,match:{path}} = this.props;
-    dispatch({
-      type:'menuManage/loadInitFields',
-      payload:params,
-      path:`${modalCode}`,
-    });
+    this.loadData();
   }
 
   onSelectChange = (selectedRowKeys) => {
@@ -65,18 +38,36 @@ class MenuManage extends PureComponent{
   cleanSelectedKeys = () => {
     this.onSelectChange([]);
   };
-
-  buttonFun = (params,funCode) => {
-    const {tbCode,dispatch,match:{path}} = this.props;
-    const { searchParams } = this.state;
+  
+  // 初始数据加载
+  loadData=()=> {
+    const { dispatch,match:{path} } = this.props;
+    const { tbCode } = this.state;
     dispatch({
-      type:'menuManage/buttonFun',
-      payload:params,
-      path:`${funCode}`,
-      callBackPayload:searchParams,
-      callBackPath:'LoadSplitData',
+      type:'system/loadConfigData',
+      payload:{tbCode},
+      path:path,
     });
-    this.cleanSelectedKeys();
+  }
+
+  // 列表数据
+  loadPageSplit = (params)=> {
+    const { dispatch } = this.props;
+    const { tbCode } = this.state;
+    dispatch({
+      type:'system/loadSplitData',
+      payload:params
+    });
+  }
+
+  loadFields = (dKey,modalCode) => {
+    const {tbCode,dispatch,match:{path}} = this.props;
+    let params = {};
+    dispatch({
+      type:'system/loadInitFields',
+      payload:params,
+      path:`${path}/${modalCode}`,
+    });
   }
 
   // componentWillReceiveProps(nextProp){
@@ -91,16 +82,15 @@ class MenuManage extends PureComponent{
 
   // 页面渲染
   render(){
-    const { loading,menuManage } = this.props;
+    const { loading,system } = this.props;
     const { searchParams,selectedRowKeys } = this.state;
 
     const tableMethod = {
       loadPageSplit:this.loadPageSplit,
       loadFields:this.loadFields,
-      buttonFun:this.buttonFun,
+      ...system,
       loading:loading,
       tbCode:this.state.tbCode,
-      ...menuManage,
       searchParams:searchParams,
       onSelectChange:this.onSelectChange,
       selectedRowKeys:selectedRowKeys,

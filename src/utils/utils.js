@@ -211,3 +211,17 @@ export function formatWan(val) {
 export function isAntdPro() {
   return window.location.hostname === 'preview.pro.ant.design';
 }
+
+export function formatString(source,args){
+  if(typeof args ==='string'){
+    return source.replace(new RegExp(`\\{0\\}`, "g"), args);
+  }if(Array.isArray(args)){
+    let result = '';
+    for(let i=0;i<args.length;i+=1){
+      result = result.replace(new RegExp(`\\{${i}\\}`, "g"), args[i]);
+    }
+    return result;
+  }
+    return source;
+  
+}
