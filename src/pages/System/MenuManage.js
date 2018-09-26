@@ -43,7 +43,7 @@ class MenuManage extends PureComponent{
     const { tbCode } = this.state;
     dispatch({
       type:'menuManage/loadSplitData',
-      path:'LoadSplitData',
+      path:'Menu/LoadSplitData',
       payload:params
     });
     this.setState({searchParams:params})

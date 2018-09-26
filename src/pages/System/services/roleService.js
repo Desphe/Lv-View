@@ -13,7 +13,19 @@ export async function loadSplitData(params){
 // 获取角色详情
 export async function loadRoleDetail(params){
     console.info('获取角色信息',params);
-    return request(`${apiUrl.systemManage.getRoleDetail}?${stringify(params)}`);
+    return request(apiUrl.systemManage.getRoleDetail,{
+        method: 'POST',
+        body: params,
+    });
+}
+
+//获取菜单
+export async function loadMenuData(params){
+    console.info('获取角色信息',params);
+    return request(`${apiUrl.systemManage.loadSplitData}/Menu/LoadSplitData`,{
+        method: 'POST',
+        body: params,
+    });
 }
 
 // 更新角色信息

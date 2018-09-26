@@ -14,7 +14,6 @@ const apiUrl = {
   },
   systemManage:{
     loadUserSplitData:`${host}api/User/LoadSplitData`,
-    getUserRoleDetail:`${host}api/User/GetUserRoleDetail`,
     getUserDetail:`${host}api/User/GetUserDetail`,
     editUserData:`${host}api/User/EditUserData`,
     changeUserState:`${host}api/User/ChangeUserState`,
@@ -30,8 +29,10 @@ const apiUrl = {
     editLanguage:`${host}api/Language/EditLanguage`,
     loadLanguageList:`${host}api/Language/GetLanguageList`,
 
-    loadMenuSplitData:`${host}api/Menu`,
-    loadModuleSplitData:`${host}api/Module`,
+    loadModuleSplitData:`${host}api/Module/LoadSplitData`,
+    loadButtonSplitData:`${host}api/Buttons/LoadSplitData`,
+
+    loadSplitData:`${host}api/`,
   }
 }
 

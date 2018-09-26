@@ -54,9 +54,14 @@ class RoleEditForm extends PureComponent {
   componentDidMount() {
     const { dataid, dispatch } = this.props;
     console.info(dataid);
-    dispatch({
+    if(dataid) {
+      dispatch({
         type:'sysRole/loadData',
         payload:{id:dataid}
+      });
+    }
+    dispatch({
+      type:'sysRole/loadFormField',
     });
   }
 
@@ -92,7 +97,7 @@ class RoleEditForm extends PureComponent {
   renderTreeNodes = (data) => data.map((item) => {
     if (item.children) {
       return (
-        <TreeNode title={item.title} key={item.key} dataRef={item}>
+        <TreeNode title={item.name} key={item.id} dataRef={item}>
           {this.renderTreeNodes(item.children)}
         </TreeNode>
       );
@@ -142,6 +147,9 @@ class RoleEditForm extends PureComponent {
       total: tbModule.list.length,
       pageSize:tbModule.list.length
     }
+    console.log(tbModule)
+    console.log(treeMenu)
+    console.log(formValues)
 
     return (
       <Modal
@@ -179,7 +187,7 @@ class RoleEditForm extends PureComponent {
             </Form>
           </TabPane>
           <TabPane tab="菜单配置" key="2">
-            <div style={{'padding-left':50}}>
+            <div style={{paddingLeft:50}}>
               <Tree
                 checkable
                 defaultExpandAll

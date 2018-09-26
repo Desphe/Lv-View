@@ -1,5 +1,5 @@
 import { message } from 'antd';
-import {loadSplitData,loadRoleDetail,editRoleData,deleteRoleByIds } from '../services/roleService';
+import {loadSplitData,loadRoleDetail,editRoleData,deleteRoleByIds,loadMenuData } from '../services/roleService';
 
 export default {
   namespace: 'sysRole',
@@ -39,6 +39,17 @@ export default {
         });
       }else{
         message.warn(resRole.message);
+      }
+    },
+    *loadFormField({},{call,put}){
+      const resMenu = yield call(loadMenuData,{pageIndex: 1,pageSize: 10});
+      if(resMenu.code===200){
+        yield put({
+          type: 'fields',
+          payload:resMenu.result.data,
+        });
+      }else{
+        message.warn(resMenu.message);
       }
     },
     *checkTreeMenu({payload},{put}){
@@ -84,12 +95,23 @@ export default {
         ...state,
         formValues:payload.role_info,
         treeMenu:{
-          list:payload.tree_menu,
+          list:state.treeMenu.list,
           checkedids:payload.menu_ids,
         },
         tbModule:{
           list:payload.list_module,
           checkedids:payload.module_ids,
+        }
+      };
+    },
+    fields(state, {payload}) {
+      console.log(state)
+      console.log(payload)
+      return {
+        ...state,
+        treeMenu:{
+          list:payload,
+          checkedids:state.treeMenu.checkedids,
         }
       };
     },

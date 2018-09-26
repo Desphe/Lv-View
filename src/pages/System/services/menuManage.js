@@ -5,7 +5,7 @@ import apiUrl from '@/utils/apiUrl'
 
 // 获取分页数据
 export async function loadSplitData(params,path) {
-  return request(`${apiUrl.systemManage.loadMenuSplitData}/${path}`,{
+  return request(`${apiUrl.systemManage.loadSplitData}/${path}`,{
     method: 'POST',
     body:params,
   });

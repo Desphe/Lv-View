@@ -127,6 +127,7 @@ function getFieldsAdd(req, res, u) {
           {"type":"textarea","label":"备注","field":"remark","required":true,"errorMessage":"不能为空","row":"half","disabled":false},
         ],
         tabName:"模块配置",
+        value:{},
       },
       {
         fields:[
@@ -140,6 +141,7 @@ function getFieldsAdd(req, res, u) {
           },
         ],
         tabName:"按钮配置",
+        value:{},
       }
     ]
   };

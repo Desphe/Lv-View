@@ -41,22 +41,12 @@ export async function loadSplitData(params){
 }
 
 // 获取用户角色
-export async function loadUserRole(params){
+export async function loadUserDetail(params){
     console.info('获取用户角色信息',params);
-    return request(`${apiUrl.systemManage.getUserRoleDetail}?${stringify(params)}`);
-    /* return {
-        code:200,
-        message:'',
-        result:{
-            list:[
-                {key:'1',title:'角色1'},
-                {key:'2',title:'角色2'},
-                {key:'3',title:'角色3'},
-                {key:'4',title:'角色4'},
-            ],
-            targets:['1','3']
-        }
-    } */
+    return request(apiUrl.systemManage.getUserDetail,{
+        method: 'POST',
+        body: params,
+    });
 }
 
 // 获取用户部门
@@ -74,26 +64,11 @@ export async function loadUserDept(params){
     }
 }
 
-// 获取用户信息
-export async function loadUserDataById(params){
-    console.info('获取用户信息',params);
-    console.info('获取用户信息',params);
-    console.info('获取用户信息',params);
-    // return request(`${apiUrl.systemManage.getUserDetail}?${stringify(params)}`);
-    return request(`http://192.168.0.108:8080/api/User/GetUserDetail/1`);
-    /* return {
-        code:200,
-        message:'成功',
-        result:{
-            login_name:'yanjc',
-            user_name:'燕俊丞',
-            email:'yanjc@163.com',
-            phone:'13916688975',
-            state:'1',
-            sort:0,
-            dept_id:'1'
-        }
-    } */
+export async function loadRoleData(params){
+    return request(apiUrl.systemManage.loadRoleSplitData,{
+        method: 'POST',
+        body: params,
+    });
 }
 
 // 更新用户信息

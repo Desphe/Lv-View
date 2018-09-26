@@ -14,7 +14,7 @@ import styles from './index.less';
 import FormBuild from '@/components/FormBuild';
 import CurrencyButton from '@/components/CurrencyButton';
 import FormTemplate from '@/components/FormTemplate';
-import EditableTable from './EditTable.js';
+import EditTable from '@/components/EditTable';
 // import notices from '../../../mock/notices';
 
 export default
@@ -191,6 +191,7 @@ class CurrencyTable extends PureComponent{
   render(){
     const { table,loadFields,dataInfo,buttonFun,loading,tbCode,selectedRowKeys,onSelectChange } = this.props;
     const { config,list,title } = table;
+    console.log(list)
     const { modal,pagination } = this.state;
     const rowSelection = {
       selectedRowKeys,

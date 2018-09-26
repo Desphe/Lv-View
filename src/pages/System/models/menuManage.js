@@ -28,17 +28,17 @@ let searchConfig = [
   {type:"text",label:"最后修改人",field:"lastUpdateUser",row:"half"},
 ];
 let btnConfig = [
-  {btnName:"新增",type:"primary",funCode:"EditMenuDetail",icon:"diff",showType:0,modalCode:"",isModal:true,isNeedSelect:0},
-  {btnName:"编辑",type:"primary",funCode:"EditMenuDetail",icon:"edit",showType:0,modalCode:"GetDetail",isModal:true,isNeedSelect:1},
-  {btnName:"删除",funCode:"DeleteMenuByIds",icon:"delete",showType:0,isModal:false,isNeedSelect:2},
+  {btnName:"新增",type:"primary",funCode:"Menu/EditMenuDetail",icon:"diff",showType:0,modalCode:"",isModal:true,isNeedSelect:0},
+  {btnName:"编辑",type:"primary",funCode:"Menu/EditMenuDetail",icon:"edit",showType:0,modalCode:"Menu/GetDetail",isModal:true,isNeedSelect:1},
+  {btnName:"删除",funCode:"Menu/DeleteMenuByIds",icon:"delete",showType:0,isModal:false,isNeedSelect:2},
 ]
 let fields = [
   {type:"treeSelect",label:"父级编号",field:"parentId",required:true,errorMessage:"不能为空",row:"half",disabled:false},
   {type:"text",label:"菜单名称",field:"name",required:true,errorMessage:"不能为空",row:"half",disabled:false},
   {type:"int",label:"菜单编码",field:"code",required:true,errorMessage:"不能为空",row:"half",disabled:false},
   {type:"text",label:"明细",field:"path",required:true,errorMessage:"不能为空",row: "half",disabled:false},
-  {type:"text",label:"排序",field:"sort",required:false,errorMessage:"",row: "half",disabled:false},
-  {type:"text",label:"状态",field:"state",required:false,errorMessage:"",row: "half",disabled:false},
+  {type:"int",label:"排序",field:"sort",required:false,errorMessage:"",row: "half",disabled:false},
+  {type:"int",label:"状态",field:"state",required:false,errorMessage:"",row: "half",disabled:false},
 ]
 
 function getField(data) {

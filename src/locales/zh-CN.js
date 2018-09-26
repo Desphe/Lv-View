@@ -25,8 +25,8 @@ export default {
   'comm.email': '邮箱',
   'comm.sort': '排序',
   'comm.mobile': '手机号码',
-  'comm.no_empty': '{0}不能为空',
-  'comm.please_input': '请输入{0}',
+  'comm.no_empty': '不能为空',
+  'comm.please_input': '请输入',
   // =====================常规=====================
 
   // =====================业务=====================

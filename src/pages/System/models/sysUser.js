@@ -1,5 +1,5 @@
 import { message } from 'antd';
-import {loadSplitData,loadUserRole,loadUserDataById,loadUserDept,editUserData,changeUserStateByIds} from '../services/userService';
+import {loadSplitData,loadUserDetail,loadUserDept,editUserData,changeUserStateByIds,loadRoleData} from '../services/userService';
 
 export default {
   namespace: 'sysUser',
@@ -28,33 +28,28 @@ export default {
       }
     },
     *LoadUserData({payload},{call,put}){
-      const resRole = yield call(loadUserRole,payload);
+      const resUser = yield call(loadUserDetail,payload);
       const resDept = yield call(loadUserDept,payload);
-      console.info('获取用户信息',payload);
-      console.info('获取用户信息',payload);
-      if(resRole.code===200 && resDept.code===200){
-        if(payload.id>0){
-          const resData = yield call(loadUserDataById,payload);
-          if(resData.code===200){
-            yield put({
-              type: 'userinfo',
-              role: resRole.result,
-              uData:resData.result,
-              dept:resDept.result
-            });
-          }else{
-            message.warn(resData.message);
-          }
-        }else{
-          yield put({
-            type: 'userinfo',
-            role: resRole.result,
-            uData:{},
-            dept:resDept.result
-          });
-        }
+      if(resUser.code===200 && resDept.code===200){
+        yield put({
+          type: 'userinfo',
+          targets: resUser.result.role,
+          uData:resUser.result.user,
+          dept:resDept.result
+        });
       }else{
         message.warn(resRole.message);
+      }
+    },
+    *loadRoleData({}, { call, put }) {
+      const res = yield call(loadRoleData,{pageIndex: 1, pageSize: 0});
+      if(res.code===200){
+        yield put({
+          type: 'changeRole',
+          list: res.result.data,
+        });
+      }else{
+        message.warn(res.message);
       }
     },
     *changeRoleTransfer({payload},{put}){
@@ -89,19 +84,22 @@ export default {
         pagination:payload.pagination
       };
     },
-    userinfo(state, {role,uData,dept}){
-      return {
-        ...state,
-        role,
-        dept,
-        formValues:uData
-      };
-    },
-    changeRole(state, {targets}){
+    userinfo(state, {targets,uData,dept}){
       return {
         ...state,
         role:{
           list:state.role.list,
+          targets:targets,
+        },
+        dept,
+        formValues:uData
+      };
+    },
+    changeRole(state, {list,targets}){
+      return {
+        ...state,
+        role:{
+          list:list,
           targets
         }
       };
